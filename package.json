@@ -1,0 +1,53 @@
+{
+  "name": "etm-starting",
+  "version": "1.0.0",
+  "description": "entanmo starting",
+  "homepage": ".",
+  "main": "app.js",
+  "dependencies": {},
+  "devDependencies": {
+    "electron": "^5.0.4",
+    "electron-builder": "^20.43.0"
+  },
+  "scripts": {
+    "start": "electron .",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build-w": "npx electron-builder -w",
+    "build-m": "npx electron-builder -m",
+    "build-l": "npx electron-builder -l"
+  },
+  "author": "Sy",
+  "license": "ISC",
+  "build": {
+    "asar": false,
+    "productName": "EnTanMo",
+    "appId": "com.entanmo.etm",
+    "copyright": "EnTanMo",
+    "electronVersion": "5.0.2",
+    "electronDownload": {
+      "version": "5.0.2"
+    },
+    "icon": "./logo.ico",
+    "files": [
+      "**/*",
+      "build/node/**/*",
+      "build/pm2/package.json",
+      {
+        "from": "build/pm2/dependances",
+        "to": "build/pm2/node_modules",
+        "filter": [
+          "**/*"
+        ]
+      },
+      "build/etm/**/*",
+      "!build/etm/dependances/**/*",
+      {
+        "from": "build/etm/dependances",
+        "to": "build/etm/node_modules",
+        "filter": [
+          "**/*"
+        ]
+      }
+    ]
+  }
+}
