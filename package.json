@@ -4,7 +4,9 @@
   "description": "entanmo starting",
   "homepage": ".",
   "main": "app.js",
-  "dependencies": {},
+  "dependencies": {
+    "vuex": "^3.1.1"
+  },
   "devDependencies": {
     "electron": "^5.0.4",
     "electron-builder": "^20.43.0"
