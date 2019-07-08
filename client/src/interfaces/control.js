@@ -20,6 +20,10 @@ class Control {
         return await server.put("/operate/pause", data);
     }
 
+    static async redo(data) {
+        return await server.put("/operate/redo", data);
+    }
+
     static async boot(data) {
         return await server.put("/operate/boot", data);
     }

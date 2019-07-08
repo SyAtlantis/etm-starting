@@ -135,13 +135,27 @@ let isboot = async ctx => {
     }
 }
 
-module.exports = (router) => {
-    router.get("/operate/getStatus", getStatus);
-    router.put("/operate/start", start);
-    router.put("/operate/stop", stop);
-    router.put("/operate/pause", pause);
+module.exports = (ipcMain) => {
+    ipcMain.on("/operate/getStatus", (event, args) => {
+        event.reply("/setting/setVulue", getStatus(args));
+    });
+    ipcMain.on("/operate/start", (event, args) => {
+        event.reply("/setting/setVulue", start(args));
+    });
+    ipcMain.on("/operate/stop", (event, args) => {
+        event.reply("/setting/setVulue", stop(args));
+    });
+    ipcMain.on("/operate/pause", (event, args) => {
+        event.reply("/setting/setVulue", pause(args));
+    });
 
-    router.put("/operate/boot", setBoot);
-    router.put("/operate/unboot", setUnboot);
-    router.get("/operate/isboot", isboot);
+    ipcMain.on("/operate/boot", (event, args) => {
+        event.reply("/setting/setVulue", setBoot(args));
+    });
+    ipcMain.on("/operate/unboot", (event, args) => {
+        event.reply("/setting/setVulue", setUnboot(args));
+    });
+    ipcMain.on("/operate/isboot", (event, args) => {
+        event.reply("/setting/setVulue", isboot(args));
+    });
 };

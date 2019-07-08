@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <div class="home-logo"></div>
+    <div class="home-logo" src="../assets/miner.png"></div>
     <div class="home-view">
       <a-row>
         <a-col :span="8">
@@ -31,7 +31,7 @@
           @click="pause"
         >暂停</a-button>
         <a-button class="btn" icon="stop" type="primary" :disabled="!canStop" @click="stop">停止</a-button>
-        <a-button class="btn" icon="redo" type="primary" :disabled="!canStop" @click="redo">重启</a-button>
+        <a-button class="btn" icon="redo" type="primary" :disabled="!canRedo" @click="redo">重启</a-button>
       </a-button-group>
     </div>
     <div class="home-monitor">
@@ -87,16 +87,15 @@ export default {
       return true;
     },
     canPause() {
-      if (this.$store.state.control.start && !this.$store.state.control.pause) {
-        return true;
-      }
-      return false;
+      return (
+        this.$store.state.control.start && !this.$store.state.control.pause
+      );
     },
     canStop() {
-      if (this.$store.state.control.start) {
-        return true;
-      }
-      return false;
+      return this.$store.state.control.start;
+    },
+    canRedo() {
+      return this.$store.state.control.start;
     }
   },
   methods: {
@@ -168,7 +167,31 @@ export default {
           console.log(`stop error=>${err}`);
         });
     },
-    redo() {}
+    redo() {
+      control
+        .redo()
+        .then(res => {
+          let { data } = res;
+          if (!data || res.status !== 200) {
+            throw new Error("Result data or status error!");
+          }
+
+          if (data.success) {
+            console.log(`redo success=>${data.results}`);
+            this.$store.state.control.start = true;
+            this.$store.state.control.pause = false;
+          } else {
+            // this.$message.warning(
+            //   `redo failure=>${data.message}`
+            // );
+            console.log(`redo failure=>${data.message}`);
+          }
+        })
+        .catch(err => {
+          // this.$message.error(`redo error=>${err}`);
+          console.log(`redo error=>${err}`);
+        });
+    }
   }
 };
 </script>

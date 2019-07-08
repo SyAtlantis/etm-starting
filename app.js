@@ -1,5 +1,5 @@
 const { app, BrowserWindow } = require('electron');
-const { fork } = require("child_process");
+// const { fork } = require("child_process");
 const path = require('path');
 
 // const Menu = electron.Menu
@@ -26,7 +26,8 @@ let createWindow = () => {
     });
 
     // 开启子进程启动服务
-    fork(__dirname + "/server/main.js", []);
+    // fork(__dirname + "/server/main.js", []);
+    require("./server");
 }
 
 app.on('ready', createWindow);

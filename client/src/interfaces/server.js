@@ -14,20 +14,30 @@ class Server {
 
   async get(uri, data) {
     ipcRenderer.send(uri, { params: data });
-    ipcRenderer.on(uri, (res) => {
+    ipcRenderer.on(uri, (event, res) => {
       return res;
     });
 
 
-    return await this.$ajax.get(uri, { params: data });
+    // return await this.$ajax.get(uri, { params: data });
   }
 
   async post(uri, data) {
-    return await this.$ajax.post(uri, { params: data });
+    ipcRenderer.send(uri, { params: data });
+    ipcRenderer.on(uri, (event, res) => {
+      return res;
+    });
+
+    // return await this.$ajax.post(uri, { params: data });
   }
 
   async put(uri, data) {
-    return await this.$ajax.put(uri, { params: data });
+    ipcRenderer.send(uri, { params: data });
+    ipcRenderer.on(uri, (event, res) => {
+      return res;
+    });
+
+    // return await this.$ajax.put(uri, { params: data });
   }
 }
 

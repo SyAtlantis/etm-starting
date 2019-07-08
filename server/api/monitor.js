@@ -168,10 +168,20 @@ let getBlockInfo = async ctx => {
     }
 };
 
-module.exports = (router) => {
-    router.get("/monitor/getNetInfo", getNetInfo);
-    router.get("/monitor/getGpuInfo", getGpuInfo);
-    router.get("/monitor/getProcInfo", getProcInfo);
-    router.get("/monitor/getSyncInfo", getSyncInfo);
-    router.get("/monitor/getBlockInfo", getBlockInfo);
+module.exports = (ipcMain) => {
+    ipcMain.on("/monitor/getNetInfo", (event, args) => {
+        event.reply("/setting/setVulue", getNetInfo(args));
+    });
+    ipcMain.on("/monitor/getGpuInfo", (event, args) => {
+        event.reply("/setting/setVulue", getGpuInfo(args));
+    });
+    ipcMain.on("/monitor/getProcInfo", (event, args) => {
+        event.reply("/setting/setVulue", getProcInfo(args));
+    });
+    ipcMain.on("/monitor/getSyncInfo", (event, args) => {
+        event.reply("/setting/setVulue", getSyncInfo(args));
+    });
+    ipcMain.on("/monitor/getBlockInfo", (event, args) => {
+        event.reply("/setting/setVulue", getBlockInfo(args));
+    });
 };

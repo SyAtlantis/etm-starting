@@ -2,7 +2,7 @@ const fs = require("fs");
 const path = require("path");
 const { ipcMain } = require('electron');
 
-const apiDir = path.resolve(__dirname, "src", "api");
+const apiDir = path.resolve(__dirname, "api");
 const APIs = fs.readdirSync(apiDir);
 APIs.forEach(el => {
     if (el.endsWith(".js")) {
