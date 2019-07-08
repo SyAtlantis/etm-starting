@@ -1,7 +1,7 @@
 module.exports = {
   publicPath: "./",
   // baseUrl: "./",
-  outputDir: "publish",
+  outputDir: "../publish",
   css: {
     loaderOptions: {
       less: {
