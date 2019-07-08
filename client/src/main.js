@@ -1,12 +1,11 @@
 import Vue from 'vue'
 import App from './App.vue'
-// import router from "./router"
 import store from "./store"
 import {
   Button, Menu, Icon, Input, Card,
   Steps, List, Avatar, Tag, Form,
   Radio, Upload, Timeline, Spin, Divider,
-  Tooltip, message, Switch, Affix
+  Tooltip, message, Switch, Affix, Row, Col
 } from "ant-design-vue"
 
 Vue.use(Button)
@@ -27,13 +26,14 @@ Vue.use(Divider)
 Vue.use(Tooltip)
 Vue.use(Switch)
 Vue.use(Affix)
+Vue.use(Row)
+Vue.use(Col)
 
 Vue.prototype.$message = message;
 
 Vue.config.productionTip = false
 
 new Vue({
-  // router,
   store,
   render: h => h(App),
 }).$mount('#app')

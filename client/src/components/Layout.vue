@@ -16,6 +16,9 @@
     </div>
     <div class="foot">
       <slot name="foot"></slot>
+      <div class="foot-right">
+        <slot name="foot-right"></slot>
+      </div>
     </div>
   </div>
 </template>
@@ -44,13 +47,14 @@ export default {
     height: @head-height;
     display: flex;
     justify-content: space-between;
-    background-color: #dde3e8;
-    font-size: 26px;
+    // background-color: #dde3e8;
+
     align-items: center;
 
     .head-left {
       width: @icon-width;
       height: @head-height;
+      font-size: 26px;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -69,6 +73,7 @@ export default {
     .head-right {
       width: @icon-width;
       height: @head-height;
+      font-size: 26px;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -78,7 +83,7 @@ export default {
 
   .body {
     height: calc(100% - @head-height - @foot-height);
-    background-color: beige;
+    // background-color: beige;
   }
 
   .foot {
@@ -87,6 +92,19 @@ export default {
     justify-content: center;
     align-items: center;
     background-color: rgba(0, 0, 0, 0.65);
+
+    .foot-right {
+      width: @icon-width;
+      height: @head-height;
+      bottom: 40px;
+      right: 0;
+      position: absolute;
+      font-size: 26px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      // background-color: red;
+    }
   }
 }
 </style>
