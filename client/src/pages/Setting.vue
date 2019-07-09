@@ -107,7 +107,7 @@
 </template>
 
 <script>
-import { setting } from "../interfaces";
+import { setting } from "../modules";
 
 export default {
   name: "setting",

@@ -30,7 +30,7 @@
 <script>
 import Tag from "../components/Tag";
 
-import { monitor } from "../interfaces";
+import { monitor } from "../modules";
 
 export default {
   name: "monitor",

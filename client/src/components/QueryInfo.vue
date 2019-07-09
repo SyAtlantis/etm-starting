@@ -42,7 +42,7 @@ export default {
     };
   },
   mounted() {
-    this.check();
+    // this.check();
   },
   props: {
     func1: {

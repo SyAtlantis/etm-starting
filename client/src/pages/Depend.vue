@@ -33,7 +33,7 @@
 
 <script>
 import QueryInfo from "../components/QueryInfo";
-import { depand } from "../interfaces";
+import { depand } from "../modules";
 
 export default {
   name: "depand",
