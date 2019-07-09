@@ -1,10 +1,10 @@
 <template>
-  <a-tag class="tag" :color="types[type].color">{{types[type].text}}</a-tag>
+  <a-tag class="tag2" :color="types[type].color">{{types[type].text}}</a-tag>
 </template>
 
 <script>
 export default {
-  name: "tag",
+  name: "tag2",
   components: {},
   data() {
     return {
@@ -37,7 +37,7 @@ export default {
 </script>
 
 <style lang="less">
-.tag {
+.tag2 {
   width: 65px;
   text-align: center;
   margin: 0 10px;

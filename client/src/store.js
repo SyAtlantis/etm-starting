@@ -24,7 +24,12 @@ export default new Vuex.Store({
       status: "stopped",
       start: false,
       pause: false,
-      boot: false
+      boot: false,
+      minerInfo: {
+        banlance: 0,
+        reward: 0,
+        height: 0
+      }
     },
     setting: {
       ip: "",
@@ -37,10 +42,7 @@ export default new Vuex.Store({
       netInfo: {
         status: "error",
         message: "无法获取到网络链接状态！刷新重试！",
-        data: {
-          publicIp: "",
-          port: ""
-        }
+        data: {}
       },
       gpuInfo: {
         status: "error",

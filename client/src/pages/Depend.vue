@@ -12,32 +12,29 @@
       >
         <QueryInfo :func1="item.func1" :func2="item.func2" :name="item.name"></QueryInfo>
       </a-form-item>
-      <!-- <a-form-item
-        v-else
-        label="参数设置"
-        :labelCol="{xs: {span: 4}, sm: {span: 4}}"
-        :wrapperCol="{xs: {span: 18}, sm: {span: 18} }"
-      >
+      <a-form-item v-else label="参数设置" :labelCol="{span: 5}" :wrapperCol="{span: 16}">
         <div v-if="isSetted">
           <Tag3 type="setted" />
-          <span>可进入设置页面修改！</span>
+          <a-button class="btn" type="primary" @click="toSetting">修改设置</a-button>
         </div>
         <div v-else>
           <Tag3 type="unsetted" />
-          <span>请先进入设置页面设置！</span>
+          <a-button class="btn" type="primary" @click="toSetting">进入设置</a-button>
         </div>
-      </a-form-item>-->
+      </a-form-item>
     </a-form>
   </div>
 </template>
 
 <script>
 import QueryInfo from "../components/QueryInfo";
+import Tag3 from "../components/Tag3";
+
 import { depand } from "../modules";
 
 export default {
   name: "depand",
-  components: { QueryInfo },
+  components: { QueryInfo, Tag3 },
   data() {
     return {
       formList: [
@@ -68,8 +65,16 @@ export default {
       ]
     };
   },
-  computed: {},
-  methods: {}
+  computed: {
+    isSetted() {
+      return this.$store.state.setting.port;
+    }
+  },
+  methods: {
+    toSetting() {
+      this.$store.state.page = 2;
+    }
+  }
 };
 </script>
 
@@ -77,5 +82,6 @@ export default {
 .depand {
   width: 100%;
   height: 100%;
+  padding: 24px 40px;
 }
 </style>

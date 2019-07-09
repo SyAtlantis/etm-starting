@@ -5,20 +5,20 @@
         <img src="../assets/miner.png" />
       </div>
       <div class="top-depend" v-else>
-        <div class="top-tip">依赖的环境尚未配置，点击进入配置！</div>
+        <div class="top-tip">项目运行所依赖的环境尚未配置完全，点击进入配置！</div>
         <a-button class="top-btn" type="primary" @click="toDepend">配置环境</a-button>
       </div>
     </div>
     <div class="control-view">
       <a-row>
         <a-col :span="8">
-          <HeadInfo title="我的余额" content="56" :center="false" :bordered="true" />
+          <HeadInfo title="我的余额" :content="minerInfo.banlance" :center="false" :bordered="true" />
         </a-col>
         <a-col :span="8">
-          <HeadInfo title="出块收益" content="8/24" :center="false" :bordered="true" />
+          <HeadInfo title="出块收益" :content="minerInfo.reward" :center="false" :bordered="true" />
         </a-col>
         <a-col :span="8">
-          <HeadInfo title="最后出块高度" content="2,223" :center="false" />
+          <HeadInfo title="最后出块高度" :content="minerInfo.height" :center="false" />
         </a-col>
       </a-row>
     </div>
@@ -66,6 +66,9 @@ export default {
     return {};
   },
   computed: {
+    minerInfo() {
+      return this.$store.state.control.minerInfo;
+    },
     monitorItems() {
       return [
         {
@@ -237,6 +240,7 @@ export default {
 .control {
   width: 100%;
   height: 100%;
+  padding: 0 40px;
 
   .control-top {
     width: 100%;
@@ -256,7 +260,7 @@ export default {
 
       .top-tip {
         padding: 10px;
-        font-size: 20px;
+        font-size: 18px;
         color: red;
       }
       .top-btn {
@@ -267,18 +271,17 @@ export default {
   }
 
   .control-view {
-    padding: 12px 24px;
+    padding: 12px 0px;
   }
 
   .control-operate {
     width: 100%;
-    padding: 12px 24px;
+    padding: 12px 12px;
 
     .control-btns {
       width: 100%;
-      // display: flex;
-      // justify-content: center;
-      // align-items: center;
+      display: flex;
+      justify-content: center;
 
       .btn {
         width: 25%;
@@ -289,7 +292,7 @@ export default {
   }
 
   .control-monitor {
-    padding: 12px 24px;
+    padding: 12px 0px;
 
     .monitor-col {
       padding: 12px 24px;

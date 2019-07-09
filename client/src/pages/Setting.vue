@@ -92,7 +92,7 @@
             />
           </a-form-item>
           <a-form-item label="注意" :labelCol="{span: 5}" :wrapperCol="{span: 16}" required>
-            <span>保存后需要重新启动项目才能生效！！！</span>
+            <span class="setting-tip">保存后需要重新启动项目才能生效！！！</span>
           </a-form-item>
           <a-form-item :labelCol="{span: 4}" :wrapperCol="{span: 18, offset: 4}">
             <div class="setting-button">
@@ -202,6 +202,7 @@ export default {
 .setting {
   width: 100%;
   height: 100%;
+  padding: 0 40px;
 
   .setting-content {
     padding-top: 20px;
@@ -211,6 +212,11 @@ export default {
     }
     .button-ip {
       width: 50px;
+    }
+
+    .setting-tip {
+      font-size: 18px;
+      color: red;
     }
   }
 

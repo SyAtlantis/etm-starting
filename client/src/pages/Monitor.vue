@@ -13,7 +13,7 @@
             shape="circle"
             @click="reload(item.name)"
           />
-          <Tag class="title-tag" :type="item.status" slot="title" />
+          <Tag2 class="title-tag" :type="item.status" slot="title" />
           <a-avatar slot="avatar" :size="48" shape="square" :src="item.avatar" />
           <span v-if="item.status == 'error'" slot="description">{{item.message}}</span>
           <template v-else slot="description" v-for="({name, value}, index) in item.actions">
@@ -28,13 +28,13 @@
 </template>
 
 <script>
-import Tag from "../components/Tag";
+import Tag2 from "../components/Tag2";
 
 import { monitor } from "../modules";
 
 export default {
   name: "monitor",
-  components: { Tag },
+  components: { Tag2 },
   data() {
     return {};
   },
@@ -185,7 +185,7 @@ export default {
 .monitor {
   width: 100%;
   height: 100%;
-  padding: 0 24px;
+  padding: 0 40px;
 
   .title-reload {
     margin-left: 20px;

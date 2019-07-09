@@ -2,7 +2,7 @@
   <div id="app">
     <Layout>
       <a-icon slot="head-left" v-if="page == 0" type="schedule" @click="toDepand" />
-      <a-icon slot="head-left" v-else type="arrow-left" @click="toBack" />
+      <a-icon slot="head-left" v-else type="home" @click="toControl" />
       <a-icon slot="head-right" v-show="page == 0" type="setting" @click="toSetting" />
       <a-icon slot="foot-right" v-show="page == 0" type="pic-right" @click="toMonitor" />
       <div slot="head-center"></div>
@@ -39,7 +39,7 @@ export default {
     }
   },
   methods: {
-    toBack() {
+    toControl() {
       this.$store.state.page = 0;
     },
     toDepand() {

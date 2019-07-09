@@ -47,7 +47,7 @@ export default {
     height: @head-height;
     display: flex;
     justify-content: space-between;
-    // background-color: #dde3e8;
+    background-color: #dde3e8;
 
     align-items: center;
 
