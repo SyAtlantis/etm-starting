@@ -20,7 +20,6 @@
             <span :key="name">{{name}} : {{value}}</span>
             <a-divider :key="index" type="vertical" v-if="index !== item.actions.length-1" />
           </template>
-          <span slot="description"></span>
         </a-list-item-meta>
       </a-list-item>
     </a-list>

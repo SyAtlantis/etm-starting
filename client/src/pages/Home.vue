@@ -1,11 +1,36 @@
 <template>
   <div id="app">
     <Layout>
-      <a-icon slot="head-left" v-if="page == 0" type="schedule" @click="toDepand" />
+      <a-icon
+        slot="head-center"
+        type="home"
+        @click="toControl"
+        :style="{color:page ===0?'#1890ff':'',cursor:'pointer'}"
+      />
+      <a-icon
+        slot="head-center"
+        type="schedule"
+        @click="toDepand"
+        :style="{color:page ===1?'#1890ff':'',cursor:'pointer'}"
+      />
+      <a-icon
+        slot="head-center"
+        type="setting"
+        @click="toSetting"
+        :style="{color:page ===2?'#1890ff':'',cursor:'pointer'}"
+      />
+      <a-icon
+        slot="head-center"
+        type="pic-left"
+        @click="toMonitor"
+        :style="{color:page ===3?'#1890ff':'',cursor:'pointer'}"
+      />
+
+      <!-- <a-icon slot="head-left" v-if="page == 0" type="schedule" @click="toDepand" />
       <a-icon slot="head-left" v-else type="home" @click="toControl" />
       <a-icon slot="head-right" v-show="page == 0" type="setting" @click="toSetting" />
-      <a-icon slot="foot-right" v-show="page == 0" type="pic-right" @click="toMonitor" />
-      <div slot="head-center"></div>
+      <a-icon slot="foot-right" v-show="page == 0" type="pic-right" @click="toMonitor" />-->
+      <!-- <div slot="head-center"></div> -->
       <div slot="body">
         <Control v-show="page===0" />
         <Depend v-show="page===1" />
@@ -26,6 +51,11 @@ import Monitor from "./Monitor";
 
 export default {
   name: "app",
+  data() {
+    return {
+      current: [this.$store.state.page]
+    };
+  },
   components: {
     Layout,
     Control,

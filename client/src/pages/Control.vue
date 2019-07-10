@@ -1,55 +1,63 @@
 <template>
   <div class="control">
-    <div class="control-top">
-      <div class="top-logo" v-if="isInstallAll">
-        <img src="../assets/miner.png" />
+    <a-spin :spinning="spinning" tip="加载中...">
+      <div class="control-top">
+        <div class="top-logo" v-if="isInstallAll">
+          <img src="../assets/miner.png" />
+        </div>
+        <div class="top-depend" v-else>
+          <div class="top-tip">项目运行所依赖的环境尚未配置完全，点击进入配置！</div>
+          <a-button class="top-btn" type="primary" @click="toDepend">配置环境</a-button>
+        </div>
       </div>
-      <div class="top-depend" v-else>
-        <div class="top-tip">项目运行所依赖的环境尚未配置完全，点击进入配置！</div>
-        <a-button class="top-btn" type="primary" @click="toDepend">配置环境</a-button>
+      <div class="control-view">
+        <a-row>
+          <a-col :span="8">
+            <HeadInfo title="我的余额" :content="minerInfo.banlance" :center="false" :bordered="true" />
+          </a-col>
+          <a-col :span="8">
+            <HeadInfo title="出块收益" :content="minerInfo.reward" :center="false" :bordered="true" />
+          </a-col>
+          <a-col :span="8">
+            <HeadInfo title="出块率" :content="minerInfo.productivity+'%'" :center="false" />
+          </a-col>
+        </a-row>
       </div>
-    </div>
-    <div class="control-view">
-      <a-row>
-        <a-col :span="8">
-          <HeadInfo title="我的余额" :content="minerInfo.banlance" :center="false" :bordered="true" />
-        </a-col>
-        <a-col :span="8">
-          <HeadInfo title="出块收益" :content="minerInfo.reward" :center="false" :bordered="true" />
-        </a-col>
-        <a-col :span="8">
-          <HeadInfo title="出块率" :content="minerInfo.productivity+'%'" :center="false" />
-        </a-col>
-      </a-row>
-    </div>
-    <div class="control-operate">
-      <a-button-group class="control-btns">
-        <a-button
-          class="btn"
-          icon="play-circle"
-          type="primary"
-          :disabled="!canStart"
-          @click="start"
-        >启动</a-button>
-        <a-button
-          class="btn"
-          icon="pause-circle"
-          type="primary"
-          :disabled="!canPause"
-          @click="pause"
-        >暂停</a-button>
-        <a-button class="btn" icon="stop" type="primary" :disabled="!canStop" @click="stop">停止</a-button>
-        <a-button class="btn" icon="redo" type="primary" :disabled="!canRedo" @click="redo">重启</a-button>
-      </a-button-group>
-    </div>
-    <div class="control-monitor">
-      <a-row>
-        <a-col class="monitor-col" :span="12" v-for="(item, index) in monitorItems" :key="index">
-          <StatusIcon :type="item.status" />
-          <a class="monitor-col-text">{{ item.title }}</a>
-        </a-col>
-      </a-row>
-    </div>
+      <div class="control-operate">
+        <a-button-group class="control-btns">
+          <a-button
+            class="btn"
+            icon="play-circle"
+            type="primary"
+            :disabled="!canStart"
+            @click="start"
+          >启动</a-button>
+          <a-button
+            class="btn"
+            icon="pause-circle"
+            type="primary"
+            :disabled="!canPause"
+            @click="pause"
+          >暂停</a-button>
+          <a-button class="btn" icon="stop" type="primary" :disabled="!canStop" @click="stop">停止</a-button>
+          <a-button class="btn" icon="redo" type="primary" :disabled="!canRedo" @click="redo">重启</a-button>
+        </a-button-group>
+      </div>
+      <div class="control-monitor">
+        <a-row>
+          <a-col
+            class="monitor-col"
+            :span="12"
+            v-for="(item, index) in monitorItems"
+            :key="index"
+            @click="toMonitor"
+          >
+            <StatusIcon :type="item.status" />
+            <a class="monitor-col-text">{{ item.title }}</a>
+          </a-col>
+        </a-row>
+      </div>
+    </a-spin>
   </div>
 </template>
 
@@ -63,7 +71,9 @@ export default {
   name: "control",
   components: { HeadInfo, StatusIcon },
   data() {
-    return {};
+    return {
+      spinning: false
+    };
   },
   computed: {
     minerInfo() {
@@ -139,6 +149,9 @@ export default {
     toDepend() {
       this.$store.state.page = 1;
     },
+    toMonitor() {
+      this.$store.state.page = 3;
+    },
     getMinerInfo() {
       control
         .getMinerInfo()
@@ -164,6 +177,8 @@ export default {
         });
     },
     getStatus() {
+      this.spinning = true;
+
       control
         .getStatus()
         .then(res => {
@@ -191,10 +206,12 @@ export default {
             // );
             console.log(`get status failure=>${data.message}`);
           }
+          this.spinning = false;
         })
         .catch(err => {
           // this.$message.error(`get status error=>${err}`);
           console.log(`get status error=>${err}`);
+          this.spinning = false;
         });
     },
     start() {
@@ -298,7 +315,7 @@ export default {
 .control {
   width: 100%;
   height: 100%;
-  padding: 0 40px;
+  padding: 24px 40px;
 
   .control-top {
     width: 100%;
@@ -318,7 +335,7 @@ export default {
 
       .top-tip {
         padding: 10px;
-        font-size: 18px;
+        font-size: 16px;
         color: red;
       }
       .top-btn {

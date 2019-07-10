@@ -237,11 +237,9 @@ export default {
 .setting {
   width: 100%;
   height: 100%;
-  padding: 0 40px;
+  padding: 24px 40px;
 
   .setting-content {
-    padding-top: 20px;
-
     .input-ip {
       width: calc(100% - 50px);
     }
@@ -250,13 +248,13 @@ export default {
     }
 
     .setting-tip {
-      font-size: 18px;
+      font-size: 16px;
       color: red;
     }
   }
 
   .setting-button {
-    padding: 20px;
+    // padding: 20px;
     display: flex;
     justify-content: space-around;
   }

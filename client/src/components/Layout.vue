@@ -37,7 +37,7 @@ export default {
 <style lang="less">
 @head-height: 50px;
 @foot-height: 40px;
-@icon-width: 60px;
+@icon-width: 0px;
 
 .layout {
   width: 100%;
@@ -65,8 +65,9 @@ export default {
       width: calc(100% - @icon-width * 2);
       height: @head-height;
       display: flex;
-      justify-content: center;
+      justify-content: space-around;
       align-items: center;
+      font-size: 26px;
       // background-color: blue;
     }
 
@@ -83,6 +84,7 @@ export default {
 
   .body {
     height: calc(100% - @head-height - @foot-height);
+    overflow-y: auto;
     // background-color: beige;
   }
 
