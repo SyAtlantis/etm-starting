@@ -37,6 +37,13 @@ export default {
   data() {
     return {};
   },
+  mounted() {
+    this.getInfo("netInfo");
+    this.getInfo("gpuInfo");
+    this.getInfo("procInfo");
+    this.getInfo("syncInfo");
+    this.getInfo("blockInfo");
+  },
   computed: {
     listData() {
       return [
