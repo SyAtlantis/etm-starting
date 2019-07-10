@@ -24,7 +24,7 @@ const _winreg = () => {
 
 const _winreg_issetted = async () => {
     return new Promise((resolve, reject) => {
-        const { inst } = _winreg();
+        const inst = _winreg();
         inst.valueExists(WINREG_REG_KEY, (err, result) => {
             if (err) {
                 return reject(new Error(err.toString()));
