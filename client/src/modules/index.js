@@ -1,10 +1,10 @@
-import depand from "./depand"
+import depend from "./depend"
 import monitor from "./monitor"
 import control from "./control"
 import setting from "./setting"
 
 export {
-  depand,
+  depend,
   monitor,
   control,
   setting

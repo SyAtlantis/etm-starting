@@ -1,10 +1,8 @@
 "use strict";
 
 const axios = require('axios');
-const File = require('../libs/file');
 const etm = require('../libs/etm');
-const etmjslib = require('etm-js-lib');
-
+const chain = require('../libs/chain');
 
 let getNetInfo = async ctx => {
     try {
@@ -97,13 +95,7 @@ let getProcInfo = async ctx => {
 
 let getSyncInfo = async ctx => {
     try {
-        let config = File.readConfig();
-        let port = config.port;
-        // let url = `http://20.188.242.113:${port}/api/loader/status/sync`;
-        let url = `http://localhost:${port}/api/loader/status/sync`;
-
-        // console.log("getSyncInfo url=>", url)
-        await axios.get(url)
+        await chain.getSyncInfo()
             .then(res => {
                 // console.log(res);
                 if (res.data && res.data.success) {
@@ -129,22 +121,7 @@ let getSyncInfo = async ctx => {
 
 let getBlockInfo = async ctx => {
     try {
-        let config = File.readConfig();
-        let port = config.port;
-
-        let secret = config.forging.secret[0];
-        if (!secret) {
-            throw "This miner did not set secret!";
-        }
-
-        let hash = etmjslib.crypto.createHash("sha256").update(secret).digest();
-        let publicKey = etmjslib.utils.ed.MakeKeypair(hash).publicKey;
-        let url = `http://localhost:${port}/api/delegates/get?publicKey=${publicKey}`;
-
-        // let publicKey = "330fce6558acfae682fd720295fbfb07434a2511048d3fa6497887aa3a9521e6"
-        // let url = `http://20.188.242.113:${port}/api/delegates/get?publicKey=${publicKey}`;
-
-        await axios.get(url)
+        await chain.getBlockInfo()
             .then(res => {
                 // console.log(res);
                 if (res.data && res.data.success) {
@@ -168,20 +145,10 @@ let getBlockInfo = async ctx => {
     }
 };
 
-module.exports = (ipcMain) => {
-    ipcMain.on("/monitor/getNetInfo", (event, args) => {
-        event.reply("/setting/setVulue", getNetInfo(args));
-    });
-    ipcMain.on("/monitor/getGpuInfo", (event, args) => {
-        event.reply("/setting/setVulue", getGpuInfo(args));
-    });
-    ipcMain.on("/monitor/getProcInfo", (event, args) => {
-        event.reply("/setting/setVulue", getProcInfo(args));
-    });
-    ipcMain.on("/monitor/getSyncInfo", (event, args) => {
-        event.reply("/setting/setVulue", getSyncInfo(args));
-    });
-    ipcMain.on("/monitor/getBlockInfo", (event, args) => {
-        event.reply("/setting/setVulue", getBlockInfo(args));
-    });
+module.exports = (router) => {
+    router.get("/monitor/getNetInfo", getNetInfo);
+    router.get("/monitor/getGpuInfo", getGpuInfo);
+    router.get("/monitor/getProcInfo", getProcInfo);
+    router.get("/monitor/getSyncInfo", getSyncInfo);
+    router.get("/monitor/getBlockInfo", getBlockInfo);
 };

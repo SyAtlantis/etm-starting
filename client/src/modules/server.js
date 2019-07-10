@@ -1,6 +1,6 @@
 import Axios from "axios";
 
-const ipcRenderer = window.electronIpcRenderer;
+// const ipcRenderer = window.electronIpcRenderer;
 
 class Server {
   constructor() {
@@ -14,39 +14,39 @@ class Server {
   }
 
   async get(uri, data) {
-    if (ipcRenderer) {
-      ipcRenderer.send(uri, { params: data });
-      ipcRenderer.on(uri, (event, res) => {
-        return res;
-      });
-    }
-    else {
-      return await this.$ajax.get(uri, { params: data });
-    }
+    // if (ipcRenderer) {
+    //   ipcRenderer.send(uri, { params: data });
+    //   ipcRenderer.on(uri, (event, res) => {
+    //     return res;
+    //   });
+    // }
+    // else {
+    return await this.$ajax.get(uri, { params: data });
+    // }
   }
 
   async post(uri, data) {
-    if (ipcRenderer) {
-      ipcRenderer.send(uri, { params: data });
-      ipcRenderer.on(uri, (event, res) => {
-        return res;
-      });
-    }
-    else {
-      return await this.$ajax.post(uri, { params: data });
-    }
+    // if (ipcRenderer) {
+    //   ipcRenderer.send(uri, { params: data });
+    //   ipcRenderer.on(uri, (event, res) => {
+    //     return res;
+    //   });
+    // }
+    // else {
+    return await this.$ajax.post(uri, { params: data });
+    // }
   }
 
   async put(uri, data) {
-    if (ipcRenderer) {
-      ipcRenderer.send(uri, { params: data });
-      ipcRenderer.on(uri, (event, res) => {
-        return res;
-      });
-    }
-    else {
-      return await this.$ajax.put(uri, { params: data });
-    }
+    // if (ipcRenderer) {
+    //   ipcRenderer.send(uri, { params: data });
+    //   ipcRenderer.on(uri, (event, res) => {
+    //     return res;
+    //   });
+    // }
+    // else {
+    return await this.$ajax.put(uri, { params: data });
+    // }
   }
 }
 

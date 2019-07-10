@@ -42,7 +42,7 @@ export default {
     };
   },
   mounted() {
-    // this.check();
+    this.check();
   },
   props: {
     func1: {
@@ -79,15 +79,15 @@ export default {
               this.status = "installed";
               this.version = data.results;
 
-              this.$store.state.depand[this.name].status = "installed";
-              this.$store.state.depand[this.name].version = data.results;
+              this.$store.state.depend[this.name].status = "installed";
+              this.$store.state.depend[this.name].version = data.results;
             } else {
               throw new Error("Requested data does not match.");
             }
           } else {
             this.spinning = false;
             this.status = "uninstalled";
-            this.$store.state.depand[this.name].status = "uninstalled";
+            this.$store.state.depend[this.name].status = "uninstalled";
 
             // this.$message.warning(
             //   `check ${this.name} failure=>${data.message}`
@@ -98,7 +98,7 @@ export default {
         .catch(err => {
           this.spinning = false;
           this.status = "checkfail";
-          this.$store.state.depand[this.name].status = "checkfail";
+          this.$store.state.depend[this.name].status = "checkfail";
 
           // this.$message.error(`check ${this.name} error=>${err}`);
           console.log(`check ${this.name} error=>${err}`);

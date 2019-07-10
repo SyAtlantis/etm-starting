@@ -1,5 +1,4 @@
 const path = require("path");
-const fs = require("fs");
 const File = require("./file");
 const Shell = require("./shell");
 
@@ -67,6 +66,16 @@ class Etm {
 
     static async pause() {
         let command = `pm2 stop ${appName}`;
+        try {
+            return await Shell.exec(command);
+        } catch (err) {
+            throw err;
+        }
+    }
+
+    static async restart() {
+        console.log('resatrt')
+        let command = `pm2 restart ${appName}`;
         try {
             return await Shell.exec(command);
         } catch (err) {

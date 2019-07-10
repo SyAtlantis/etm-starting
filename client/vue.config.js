@@ -10,7 +10,7 @@ module.exports = {
     }
   },
   devServer: {
-    port: 7779,
+    port: 7777,
     // proxy: {
     //   // 配置多个代理(配置一个 proxy: 'http://localhost:4000' )
     //   "/api": {

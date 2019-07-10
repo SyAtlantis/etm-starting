@@ -28,11 +28,11 @@ export default new Vuex.Store({
       minerInfo: {
         banlance: 0,
         reward: 0,
-        height: 0
+        productivity: 0
       }
     },
     setting: {
-      ip: "",
+      publicIp: "",
       port: "4096",
       secret: "",
       peers: "",

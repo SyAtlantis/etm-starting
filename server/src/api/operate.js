@@ -1,6 +1,27 @@
 "use strict";
+
 const etm = require('../libs/etm');
 const boot = require('../libs/boot');
+const chain = require('../libs/chain');
+
+let getMinerInfo = async ctx => {
+    try {
+        await chain.getMinerInfo()
+            .then(res => {
+                ctx.body = {
+                    success: true,
+                    results: res
+                };
+            }).catch(err => {
+                throw err;
+            });
+    } catch (err) {
+        ctx.body = {
+            success: false,
+            message: `${err}`
+        };
+    }
+}
 
 let getStatus = async ctx => {
     try {
@@ -78,6 +99,25 @@ let pause = async ctx => {
     }
 }
 
+let redo = async ctx => {
+    try {
+        await etm.restart()
+            .then(res => {
+                ctx.body = {
+                    success: true,
+                    results: res
+                };
+            }).catch(err => {
+                throw err;
+            });
+    } catch (err) {
+        ctx.body = {
+            success: false,
+            message: `${err}`
+        };
+    }
+}
+
 let setBoot = async ctx => {
     try {
         await boot.boot()
@@ -135,27 +175,16 @@ let isboot = async ctx => {
     }
 }
 
-module.exports = (ipcMain) => {
-    ipcMain.on("/operate/getStatus", (event, args) => {
-        event.reply("/setting/setVulue", getStatus(args));
-    });
-    ipcMain.on("/operate/start", (event, args) => {
-        event.reply("/setting/setVulue", start(args));
-    });
-    ipcMain.on("/operate/stop", (event, args) => {
-        event.reply("/setting/setVulue", stop(args));
-    });
-    ipcMain.on("/operate/pause", (event, args) => {
-        event.reply("/setting/setVulue", pause(args));
-    });
+module.exports = (router) => {
+    router.get("/operate/getMinerInfo", getMinerInfo);
+    router.get("/operate/getStatus", getStatus);
 
-    ipcMain.on("/operate/boot", (event, args) => {
-        event.reply("/setting/setVulue", setBoot(args));
-    });
-    ipcMain.on("/operate/unboot", (event, args) => {
-        event.reply("/setting/setVulue", setUnboot(args));
-    });
-    ipcMain.on("/operate/isboot", (event, args) => {
-        event.reply("/setting/setVulue", isboot(args));
-    });
+    router.put("/operate/start", start);
+    router.put("/operate/stop", stop);
+    router.put("/operate/pause", pause);
+    router.put("/operate/redo", redo);
+
+    router.put("/operate/boot", setBoot);
+    router.put("/operate/unboot", setUnboot);
+    router.get("/operate/isboot", isboot);
 };

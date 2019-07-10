@@ -18,7 +18,7 @@
           <HeadInfo title="出块收益" :content="minerInfo.reward" :center="false" :bordered="true" />
         </a-col>
         <a-col :span="8">
-          <HeadInfo title="最后出块高度" :content="minerInfo.height" :center="false" />
+          <HeadInfo title="出块率" :content="minerInfo.productivity+'%'" :center="false" />
         </a-col>
       </a-row>
     </div>
@@ -109,7 +109,7 @@ export default {
         return false;
       }
 
-      // this.getStatus();
+      this.getStatus();
       // this.isboot();
 
       return true;
@@ -138,6 +138,64 @@ export default {
   methods: {
     toDepend() {
       this.$store.state.page = 1;
+    },
+    getMinerInfo() {
+      control
+        .getMinerInfo()
+        .then(res => {
+          let { data } = res;
+          if (!data || res.status !== 200) {
+            throw new Error("Result data or status error!");
+          }
+
+          if (data.success) {
+            console.log(`get minerInfo success=>${data.results}`);
+            this.$store.state.control.minerInfo = data.results;
+          } else {
+            // this.$message.warning(
+            //   `get minerInfo failure=>${data.message}`
+            // );
+            console.log(`get minerInfo failure=>${data.message}`);
+          }
+        })
+        .catch(err => {
+          // this.$message.error(`get minerInfo error=>${err}`);
+          console.log(`get minerInfo error=>${err}`);
+        });
+    },
+    getStatus() {
+      control
+        .getStatus()
+        .then(res => {
+          let { data } = res;
+          if (!data || res.status !== 200) {
+            throw new Error("Result data or status error!");
+          }
+
+          if (data.success) {
+            console.log(`get status success=>${data.results}`);
+            this.$store.state.control.status = data.results;
+
+            if (data.results === "online") {
+              this.$store.state.control.start = true;
+            } else if (data.results === "stopped") {
+              this.$store.state.control.start = true;
+              this.$store.state.control.pause = true;
+            } else if (data.results === "error") {
+              this.$store.state.control.start = false;
+              this.$store.state.control.pause = false;
+            }
+          } else {
+            // this.$message.warning(
+            //   `get status failure=>${data.message}`
+            // );
+            console.log(`get status failure=>${data.message}`);
+          }
+        })
+        .catch(err => {
+          // this.$message.error(`get status error=>${err}`);
+          console.log(`get status error=>${err}`);
+        });
     },
     start() {
       control

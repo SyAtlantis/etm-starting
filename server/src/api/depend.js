@@ -175,34 +175,16 @@ let uninstallEtm = async ctx => {
     }
 }
 
-module.exports = (ipcMain) => {
-    ipcMain.on("/depend/getNodeInfo", (event, args) => {
-        event.reply("/setting/setVulue", getNodeInfo(args));
-    });
-    ipcMain.on("/depend/getPm2Info", (event, args) => {
-        event.reply("/setting/setVulue", getPm2Info(args));
-    });
-    ipcMain.on("/depend/getEtmInfo", (event, args) => {
-        event.reply("/setting/setVulue", getEtmInfo(args));
-    });
+module.exports = (router) => {
+    router.get("/depend/getNodeInfo", getNodeInfo);
+    router.get("/depend/getPm2Info", getPm2Info);
+    router.get("/depend/getEtmInfo", getEtmInfo);
 
-    ipcMain.on("/depend/installNode", (event, args) => {
-        event.reply("/setting/setVulue", installNode(args));
-    });
-    ipcMain.on("/depend/installPm2", (event, args) => {
-        event.reply("/setting/setVulue", installPm2(args));
-    });
-    ipcMain.on("/depend/installEtm", (event, args) => {
-        event.reply("/setting/setVulue", installEtm(args));
-    });
+    router.put("/depend/installNode", installNode);
+    router.put("/depend/installPm2", installPm2);
+    router.put("/depend/installEtm", installEtm);
 
-    ipcMain.on("/depend/uninstallNode", (event, args) => {
-        event.reply("/setting/setVulue", uninstallNode(args));
-    });
-    ipcMain.on("/depend/uninstallPm2", (event, args) => {
-        event.reply("/setting/setVulue", uninstallPm2(args));
-    });
-    ipcMain.on("/depend/uninstallEtm", (event, args) => {
-        event.reply("/setting/setVulue", uninstallEtm(args));
-    });
+    router.put("/depend/uninstallNode", uninstallNode);
+    router.put("/depend/uninstallPm2", uninstallPm2);
+    router.put("/depend/uninstallEtm", uninstallEtm);
 };

@@ -4,6 +4,10 @@ let server = new Server();
 
 class Control {
 
+    static async getMinerInfo(data) {
+        return await server.get("/operate/getMinerInfo", data);
+    }
+
     static async getStatus(data) {
         return await server.get("/operate/getStatus", data);
     }
@@ -24,16 +28,16 @@ class Control {
         return await server.put("/operate/redo", data);
     }
 
+    static async isboot(data) {
+        return await server.get("/operate/isboot", data);
+    }
+
     static async boot(data) {
         return await server.put("/operate/boot", data);
     }
 
     static async unboot(data) {
         return await server.put("/operate/unboot", data);
-    }
-
-    static async isboot(data) {
-        return await server.get("/operate/isboot", data);
     }
 
 }

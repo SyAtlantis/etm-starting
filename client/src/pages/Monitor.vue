@@ -185,7 +185,7 @@ export default {
 .monitor {
   width: 100%;
   height: 100%;
-  padding: 0 40px;
+  padding: 24px 40px;
 
   .title-reload {
     margin-left: 20px;

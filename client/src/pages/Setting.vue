@@ -8,16 +8,16 @@
               class="input-ip"
               placeholder="请输入公网IP!"
               v-decorator="[
-              'publicIp',
-              {
-                rules: [{
-                  type: 'string', message: 'The input is not valid IP',
-                }, { 
-                  validator: checkPublicIp 
-                }],
-                initialValue: this.$store.state.setting.publicIp,
-              }
-            ]"
+                'publicIp',
+                {
+                  rules: [{
+                    type: 'string', message: 'The input is not valid IP',
+                  }, { 
+                    validator: checkPublicIp 
+                  }],
+                  initialValue: this.$store.state.setting.publicIp,
+                }
+              ]"
             />
             <a-button class="button-ip" type="primary" icon="sync" @click="getIp" />
           </a-form-item>
@@ -25,18 +25,18 @@
             <a-input
               placeholder="请输入端口号!"
               v-decorator="[
-              'port',
-              {
-                rules: [{
-                  type: 'string', message: 'The input is not valid port',
-                }, {
-                  required: true, message: 'Please input your port!',
-                },{ 
-                  validator: checkPort 
-                }],
-                initialValue: this.$store.state.setting.port,
-              }
-            ]"
+                'port',
+                {
+                  rules: [{
+                    type: 'string', message: 'The input is not valid port',
+                  }, {
+                    required: true, message: 'Please input your port!',
+                  },{ 
+                    validator: checkPort 
+                  }],
+                  initialValue: this.$store.state.setting.port,
+                }
+              ]"
             />
           </a-form-item>
           <a-form-item label="Secret" :labelCol="{span: 5}" :wrapperCol="{span: 16}">
@@ -44,57 +44,57 @@
               :rows="2"
               placeholder="请输入Secret!【非受托人无需输入】"
               v-decorator="[
-              'secret',
-              {
-                rules: [{
-                  type: 'string', message: 'The input is not valid secret',
-                }, ,{ 
-                  validator: checkSecret 
-                }],
-                initialValue: this.$store.state.setting.secret,
-              }
-            ]"
+                'secret',
+                {
+                  rules: [{
+                    type: 'string', message: 'The input is not valid secret',
+                  }, ,{ 
+                    validator: checkSecret 
+                  }],
+                  initialValue: this.$store.state.setting.secret,
+                }
+              ]"
             />
           </a-form-item>
           <a-form-item label="Magic" :labelCol="{span: 5}" :wrapperCol="{span: 16}">
             <a-input
               placeholder="请输入Magic!"
               v-decorator="[
-              'magic',
-              {
-                rules: [{
-                  type: 'string', message: 'The input is not valid magic',
-                }, {
-                  required: true, message: 'Please input your magic!',
-                },{ 
-                  validator: checkMagic 
-                }],
-                initialValue: this.$store.state.setting.magic,
-              }
-            ]"
+                'magic',
+                {
+                  rules: [{
+                    type: 'string', message: 'The input is not valid magic',
+                  }, {
+                    required: true, message: 'Please input your magic!',
+                  },{ 
+                    validator: checkMagic 
+                  }],
+                  initialValue: this.$store.state.setting.magic,
+                }
+              ]"
             />
           </a-form-item>
           <a-form-item label="种子节点" :labelCol="{span: 5}" :wrapperCol="{span: 16}">
             <a-textarea
               :rows="4"
-              placeholder="请输入Peers, 如:{'ip':'123.456.78.90','port':'4096'}"
+              placeholder="请输入Peers数组, 如:[{'ip':'123.456.78.90','port':'4096'}]"
               v-decorator="[
-          'peers',
-          {
-          rules: [{
-          type: 'string', message: 'The input is not valid peers',
-          }, ,{
-          validator: checkSecret
-          }],
-          initialValue: this.$store.state.setting.peers,
-          }
-          ]"
+                'peers',
+                {
+                  rules: [{
+                  type: 'string', message: 'The input is not valid peers', 
+                  }, ,{
+                  validator: checkSecret
+                  }],
+                  initialValue: this.$store.state.setting.peers,
+                }
+              ]"
             />
           </a-form-item>
           <a-form-item label="注意" :labelCol="{span: 5}" :wrapperCol="{span: 16}" required>
             <span class="setting-tip">保存后需要重新启动项目才能生效！！！</span>
           </a-form-item>
-          <a-form-item :labelCol="{span: 4}" :wrapperCol="{span: 18, offset: 4}">
+          <a-form-item :labelCol="{span: 5}" :wrapperCol="{span: 16, offset: 4}">
             <div class="setting-button">
               <a-button type="primary" html-type="submit">保存</a-button>
               <a-button type="primary" @click="cancle">取消</a-button>
@@ -118,7 +118,9 @@ export default {
       spinning: false
     };
   },
-  computed: {},
+  mounted() {
+    this.query();
+  },
   methods: {
     handleSubmit(e) {
       e.preventDefault();
@@ -128,6 +130,39 @@ export default {
           this.save(values);
         }
       });
+    },
+    query() {
+      this.spinning = true;
+
+      setting
+        .getVulue()
+        .then(res => {
+          let { data } = res;
+          if (!data || res.status !== 200) {
+            throw new Error("Result data or status error!");
+          }
+
+          if (data.success) {
+            if (data.results) {
+              this.spinning = false;
+              this.$store.state.setting.publicIp = data.results.publicIp;
+              this.$store.state.setting.port = data.results.port;
+              this.$store.state.setting.secret = data.results.secret;
+              this.$store.state.setting.peers = JSON.stringify(
+                data.results.peers
+              );
+              this.$store.state.setting.magic = data.results.magic;
+            } else {
+              throw new Error("Requested data does not match.");
+            }
+          } else {
+            throw new Error(data.message);
+          }
+        })
+        .catch(err => {
+          console.log(err);
+          this.spinning = false;
+        });
     },
     save(data) {
       this.spinning = true;
