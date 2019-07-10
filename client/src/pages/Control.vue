@@ -2,7 +2,7 @@
   <div class="control">
     <a-spin :spinning="spinning" tip="加载中...">
       <div class="control-top">
-        <div class="top-logo" v-if="isInstallAll">
+        <div class="top-logo" v-if="isInstallAll" @click="reload">
           <img src="../assets/miner.png" />
         </div>
         <div class="top-depend" v-else>
@@ -152,7 +152,12 @@ export default {
     toMonitor() {
       this.$store.state.page = 3;
     },
+    reload() {
+      this.getMinerInfo();
+    },
     getMinerInfo() {
+      this.spinning = true;
+
       control
         .getMinerInfo()
         .then(res => {
@@ -170,10 +175,12 @@ export default {
             // );
             console.log(`get minerInfo failure=>${data.message}`);
           }
+          this.spinning = false;
         })
         .catch(err => {
           // this.$message.error(`get minerInfo error=>${err}`);
           console.log(`get minerInfo error=>${err}`);
+          this.spinning = false;
         });
     },
     getStatus() {
@@ -323,9 +330,13 @@ export default {
     display: flex;
     justify-content: center;
 
-    img {
-      width: 150px;
-      height: 130px;
+    .top-logo {
+      cursor: pointer;
+
+      img {
+        width: 150px;
+        height: 130px;
+      }
     }
 
     .top-depend {

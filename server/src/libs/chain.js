@@ -9,8 +9,8 @@ let BASEURL = `http://localhost:${port}/api`;
 class Chain {
 
     static getPublicKey(secret) {
-        let hash = etmjslib.crypto.createHash("sha256").update(secret).digest();
-        let publicKey = etmjslib.utils.ed.MakeKeypair(hash).publicKey;
+        let hash = etmjslib.lib.crypto.createHash("sha256").update(secret).digest();
+        let publicKey = etmjslib.utils.ed.MakeKeypair(hash).publicKey.toString('hex');
         return publicKey;
     }
 
@@ -21,14 +21,9 @@ class Chain {
                 throw "This miner did not set secret!";
             }
 
-            let publicKey = Prj.getPublicKey(secret);
+            let publicKey = this.getPublicKey(secret);
             let url = BASEURL + `/delegates/get?publicKey=${publicKey}`;
-            axios.get(url)
-                .then(res => {
-                    return res;
-                }).catch(err => {
-                    throw err;
-                });
+            return await axios.get(url);
         } catch (err) {
             throw err;
         }
@@ -37,16 +32,10 @@ class Chain {
     static async getSyncInfo() {
         try {
             let url = BASEURL + '/loader/status/sync';
-            axios.get(url)
-                .then(res => {
-                    return res;
-                }).catch(err => {
-                    throw err;
-                });
+            return await axios.get(url);
         } catch (err) {
             throw err;
         }
-
     }
 
     static async getBlockInfo() {
@@ -56,20 +45,14 @@ class Chain {
                 throw "This miner did not set secret!";
             }
 
-            let publicKey = Prj.getPublicKey(secret);
+            let publicKey = this.getPublicKey(secret);
             // let publicKey = "330fce6558acfae682fd720295fbfb07434a2511048d3fa6497887aa3a9521e6"
             // let url = `http://20.188.242.113:${port}/api/delegates/get?publicKey=${publicKey}`;
             let url = BASEURL + `/delegates/get?publicKey=${publicKey}`;
-            axios.get(url)
-                .then(res => {
-                    return res;
-                }).catch(err => {
-                    throw err;
-                });
+            return await axios.get(url);
         } catch (err) {
             throw err;
         }
-
     }
 }
 

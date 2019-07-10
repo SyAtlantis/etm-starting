@@ -1,4 +1,5 @@
 const path = require("path");
+const Registry = require("winreg");
 const fs = require("fs");
 const File = require("./file");
 
@@ -13,13 +14,12 @@ const WINREG_REG_KEY = "ENTANMO";
 const WINREG_REG_VALUE = path.resolve(path.join(rootDir, "startup.cmd"));
 
 const _winreg = () => {
-    const Registry = require("winreg");
     const RUN_LOCATION = "\\Software\\Microsoft\\Windows\\CurrentVersion\\Run";
     const winregInst = new Registry({
         hive: Registry.HKCU,
         key: RUN_LOCATION
     });
-    return { inst: winregInst, Registry };
+    return winregInst;
 };
 
 const _winreg_issetted = async () => {
@@ -37,7 +37,7 @@ const _winreg_issetted = async () => {
 
 const _winreg_set = async () => {
     return new Promise((resolve, reject) => {
-        const { inst, Registry } = _winreg();
+        const inst = _winreg();
         inst.set(WINREG_REG_KEY, Registry.REG_SZ, WINREG_REG_VALUE, err => {
             if (err) {
                 return reject(new Error(err.toString()));
@@ -52,7 +52,7 @@ const _winreg_unset = async () => {
         return true;
     }
     return new Promise((resolve, reject) => {
-        const { inst } = _winreg();
+        const inst = _winreg();
         inst.remove(WINREG_REG_KEY, err => {
             if (err) {
                 return reject(new Error(err.toString()));

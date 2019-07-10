@@ -11,10 +11,15 @@ const appName = "entanmo";
 class Etm {
 
     static async getEtmVersion() {
-        let packagePath = File.getPackagePath();
-        const packageJson = require(packagePath);
-        let version = packageJson.version;
-        return version;
+        try {
+            let packagePath = File.getPackagePath();
+            const packageJson = require(packagePath);
+            let version = packageJson.version;
+            return version;
+        } catch (err) {
+            throw err;
+        }
+
     }
 
     static async installEtm() {
@@ -24,31 +29,37 @@ class Etm {
     }
 
     static async getStatus() {
-        let command = `pm2 jlist`;
-        return new Promise((resolve, reject) => {
-            Shell.exec(command).then(res => {
-                let resJson = JSON.parse(res);
-                if (resJson instanceof Array) {
-                    resJson.forEach(element => {
-                        if (element.name === appName && element.pm2_env) {
-                            let status = element.pm2_env.status;
-                            return resolve(status);
-                        }
-                        return reject(new Error("Not found status!"));
-                    });
-                } else {
-                    return reject(new Error("pm2 jlist res not a string array!"));
+        try {
+            let command = `pm2 jlist`;
+            let res = await Shell.exec(command);
+            let resJson = JSON.parse(res);
+
+            if (resJson instanceof Array) {
+                let status;
+                resJson.forEach(element => {
+                    if (element.name === appName && element.pm2_env) {
+                        status = element.pm2_env.status;
+                    }
+                });
+
+                if (status) {
+                    return status;
                 }
-            }).catch(err => {
-                return reject(err);
-            });
-        });
+                else {
+                    throw ("Not found status!");
+                }
+            } else {
+                throw ("pm2 jlist res not a string array!");
+            }
+        } catch (err) {
+            throw err;
+        }
     }
 
 
     static async start() {
-        let command = `pm2 start ${app} -n ${appName} -- --base ${projDir}`;
         try {
+            let command = `pm2 start ${app} -n ${appName} -- --base ${projDir}`;
             return await Shell.exec(command);
         } catch (err) {
             throw err;
@@ -56,8 +67,8 @@ class Etm {
     }
 
     static async stop() {
-        let command = `pm2 delete ${appName}`;
         try {
+            let command = `pm2 delete ${appName}`;
             return await Shell.exec(command);
         } catch (err) {
             throw err;
@@ -65,8 +76,8 @@ class Etm {
     }
 
     static async pause() {
-        let command = `pm2 stop ${appName}`;
         try {
+            let command = `pm2 stop ${appName}`;
             return await Shell.exec(command);
         } catch (err) {
             throw err;
@@ -74,9 +85,8 @@ class Etm {
     }
 
     static async restart() {
-        console.log('resatrt')
-        let command = `pm2 restart ${appName}`;
         try {
+            let command = `pm2 restart ${appName}`;
             return await Shell.exec(command);
         } catch (err) {
             throw err;

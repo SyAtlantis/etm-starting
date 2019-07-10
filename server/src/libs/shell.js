@@ -18,7 +18,7 @@ class Shell {
         return shell.rm(opt, dst);
     }
 
-    static ln(opt, src, dst) {
+    static async ln(opt, src, dst) {
         return new Promise((resolve, reject) => {
             const shellString = shell.ln(opt, src, dst);
             if (shellString.code === 0) {

@@ -93,7 +93,7 @@ export default {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: rgba(0, 0, 0, 0.65);
+    background-color: rgba(0, 0, 0, 0.35);
 
     .foot-right {
       width: @icon-width;

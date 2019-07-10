@@ -92,5 +92,9 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   width: 100%;
   height: 100%;
+
+  max-width: 1080px;
+  margin: 0 auto;
+  background-color: ghostwhite;
 }
 </style>
