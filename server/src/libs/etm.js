@@ -23,9 +23,11 @@ class Etm {
     }
 
     static async installEtm() {
+        throw "Method is not implemented temporarily!";
     }
 
     static async unistallEtm() {
+        throw "Method is not implemented temporarily!";
     }
 
     static async getStatus() {

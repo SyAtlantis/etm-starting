@@ -99,7 +99,7 @@ let pause = async ctx => {
     }
 }
 
-let redo = async ctx => {
+let restart = async ctx => {
     try {
         await etm.restart()
             .then(res => {
@@ -182,7 +182,7 @@ module.exports = (router) => {
     router.put("/operate/start", start);
     router.put("/operate/stop", stop);
     router.put("/operate/pause", pause);
-    router.put("/operate/redo", redo);
+    router.put("/operate/redo", restart);
 
     router.put("/operate/boot", setBoot);
     router.put("/operate/unboot", setUnboot);
