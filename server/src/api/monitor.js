@@ -1,6 +1,7 @@
 "use strict";
 
 const axios = require('axios');
+const si = require('systeminformation');
 const etm = require('../libs/etm');
 const chain = require('../libs/chain');
 
@@ -35,43 +36,23 @@ let getNetInfo = async ctx => {
 
 let getGpuInfo = async ctx => {
     try {
-        ctx.body = {
-            success: false,
-            message: `${err}`
-        };
+        await si.graphics()
+            .then(res => {
+                // console.log(res.controllers);
+                ctx.body = {
+                    success: true,
+                    results: res.controllers
+                };
+            })
+            .catch(err => {
+                throw err;
+            });
     } catch (err) {
         ctx.body = {
             success: false,
             message: `${err}`
         };
     }
-
-    // let cmd = '';
-    // // let args = [];
-    // if (process.platform == 'darwin') {
-    //     // cmd = 'system_profiler';
-    //     // args = ['SPDisplaysDataType'];
-    //     cmd = 'system_profiler SPDisplaysDataType'
-    // } else if (process.platform == 'win32') {
-    //     // cmd = 'dxdiag';
-    //     // args = ['/t', 'dxdiag_out.txt'];
-    //     cmd = 'dxdiag /t dxdiag_out.txt'
-    // } else {
-    //     // aix, freebsd, linux, openbsd, sunos
-    //     // cmd = 'lshw -C display';
-    //     // args = ['-C', 'display'];
-    //     cmd = 'lshw -C display'
-    // }
-
-    // let child = shell.exec(cmd, {async:true});
-    // child.stdout.on('data', function(data) {
-
-    //   });
-    // if (shell.exec(cmd).code !== 0) {
-    //     shell.echo('Error: Git commit failed');
-    //     shell.exit(1);
-    // }
-
 };
 
 let getProcInfo = async ctx => {

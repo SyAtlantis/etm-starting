@@ -16,10 +16,12 @@
           <Tag2 class="title-tag" :type="item.status" slot="title" />
           <a-avatar slot="avatar" :size="48" shape="square" :src="item.avatar" />
           <span v-if="item.status == 'error'" slot="description">{{item.message}}</span>
-          <template v-else slot="description" v-for="({name, value}, index) in item.actions">
-            <span :key="name">{{name}} : {{value}}</span>
-            <a-divider :key="index" type="vertical" v-if="index !== item.actions.length-1" />
-          </template>
+          <div v-else slot="description" v-for="(subItems,i) of item.actions" :key="i">
+            <span v-for="({name, value}, index) in subItems" :key="index">
+              <span>{{name}} : {{value}}</span>
+              <a-divider type="vertical" v-if="index !== subItems.length-1" />
+            </span>
+          </div>
         </a-list-item-meta>
       </a-list-item>
     </a-list>
@@ -54,32 +56,36 @@ export default {
           status: this.$store.state.monitor.netInfo.status,
           message: this.$store.state.monitor.netInfo.message,
           actions: [
-            {
-              name: "公网IP",
-              value: this.$store.state.monitor.netInfo.data.publicIp
-            },
-            {
-              name: "端口",
-              value: this.$store.state.setting.port
-            }
+            [
+              {
+                name: "公网IP",
+                value: this.$store.state.monitor.netInfo.data.publicIp
+              },
+              {
+                name: "端口",
+                value: this.$store.state.setting.port
+              }
+            ]
           ]
         },
         {
-          title: "显卡状态",
+          title: "显卡信息",
           name: "gpuInfo",
           avatar: require("@/assets/gpu.png"),
           status: this.$store.state.monitor.gpuInfo.status,
           message: this.$store.state.monitor.gpuInfo.message,
-          actions: [
-            {
-              name: "型号",
-              value: "aaaaa"
-            },
-            {
-              name: "支持挖矿",
-              value: "是"
-            }
-          ]
+          actions: this.$store.state.monitor.gpuInfo.data.map(item => {
+            return [
+              {
+                name: "型号",
+                value: item.model
+              },
+              {
+                name: "内存",
+                value: item.vram
+              }
+            ];
+          })
         },
         {
           title: "进程状态",
@@ -88,10 +94,12 @@ export default {
           status: this.$store.state.monitor.procInfo.status,
           message: this.$store.state.monitor.procInfo.message,
           actions: [
-            {
-              name: "进程状态",
-              value: this.$store.state.monitor.procInfo.data.status
-            }
+            [
+              {
+                name: "进程状态",
+                value: this.$store.state.monitor.procInfo.data.status
+              }
+            ]
           ]
         },
         {
@@ -101,18 +109,20 @@ export default {
           status: this.$store.state.monitor.syncInfo.status,
           message: this.$store.state.monitor.syncInfo.message,
           actions: [
-            {
-              name: "是否在同步",
-              value: this.$store.state.monitor.syncInfo.data.syncing
-            },
-            {
-              name: "正在同步区块数量",
-              value: this.$store.state.monitor.syncInfo.data.blocks
-            },
-            {
-              name: "区块高度",
-              value: this.$store.state.monitor.syncInfo.data.height
-            }
+            [
+              {
+                name: "是否在同步",
+                value: this.$store.state.monitor.syncInfo.data.syncing
+              },
+              {
+                name: "正在同步区块数量",
+                value: this.$store.state.monitor.syncInfo.data.blocks
+              },
+              {
+                name: "区块高度",
+                value: this.$store.state.monitor.syncInfo.data.height
+              }
+            ]
           ]
         },
         {
@@ -122,22 +132,26 @@ export default {
           status: this.$store.state.monitor.blockInfo.status,
           message: this.$store.state.monitor.blockInfo.message,
           actions: [
-            {
-              name: "成功块数",
-              value: this.$store.state.monitor.blockInfo.data.producedblocks
-            },
-            {
-              name: "失败块数",
-              value: this.$store.state.monitor.blockInfo.data.missedblocks
-            },
-            {
-              name: "出块率",
-              value: this.$store.state.monitor.blockInfo.data.productivity
-            },
-            {
-              name: "总奖励",
-              value: this.$store.state.monitor.blockInfo.data.rewards
-            }
+            [
+              {
+                name: "成功块数",
+                value: this.$store.state.monitor.blockInfo.data.producedblocks
+              },
+              {
+                name: "失败块数",
+                value: this.$store.state.monitor.blockInfo.data.missedblocks
+              }
+            ],
+            [
+              {
+                name: "出块率",
+                value: this.$store.state.monitor.blockInfo.data.productivity
+              },
+              {
+                name: "总奖励",
+                value: this.$store.state.monitor.blockInfo.data.rewards
+              }
+            ]
           ]
         }
       ];

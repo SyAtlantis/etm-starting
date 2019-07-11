@@ -47,7 +47,7 @@ export default new Vuex.Store({
       gpuInfo: {
         status: "error",
         message: "无法获取到显卡状态！刷新重试！",
-        data: {}
+        data: []
       },
       procInfo: {
         status: "error",

@@ -27,6 +27,10 @@ let getPm2Info = async ctx => {
     try {
         await pm2.getPm2Version()
             .then(res => {
+                if (res instanceof String && res.length > 10) {
+                    let arr = res.split(" ");
+                    res = arr[arr.length - 1];
+                }
                 ctx.body = {
                     success: true,
                     results: res
