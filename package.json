@@ -39,11 +39,13 @@
       "version": "5.0.2"
     },
     "win": {
-      "requestedExecutionLevel": "highestAvailable"
+      "requestedExecutionLevel": "requireAdministrator"
     },
     "icon": "./logo.ico",
     "files": [
       "**/*",
+      "!.vscode/**/*",
+      "!client/**/*",
       "build/node/**/*",
       "build/pm2/package.json",
       {
