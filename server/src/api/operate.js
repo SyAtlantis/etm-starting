@@ -6,15 +6,11 @@ const chain = require('../libs/chain');
 
 let getMinerInfo = async ctx => {
     try {
-        await chain.getMinerInfo()
-            .then(res => {
-                ctx.body = {
-                    success: true,
-                    results: res
-                };
-            }).catch(err => {
-                throw err;
-            });
+        let res = await chain.getMinerInfo();
+        ctx.body = {
+            success: true,
+            results: res
+        };
     } catch (err) {
         ctx.body = {
             success: false,
@@ -25,15 +21,11 @@ let getMinerInfo = async ctx => {
 
 let getStatus = async ctx => {
     try {
-        await etm.getStatus()
-            .then(res => {
-                ctx.body = {
-                    success: true,
-                    results: res
-                };
-            }).catch(err => {
-                throw err;
-            });
+        let res = await etm.getStatus();
+        ctx.body = {
+            success: true,
+            results: res
+        };
     } catch (err) {
         ctx.body = {
             success: false,
@@ -44,15 +36,11 @@ let getStatus = async ctx => {
 
 let start = async ctx => {
     try {
-        await etm.start()
-            .then(res => {
-                ctx.body = {
-                    success: true,
-                    results: res
-                };
-            }).catch(err => {
-                throw err;
-            });
+        let res = await etm.start();
+        ctx.body = {
+            success: true,
+            results: res
+        };
     } catch (err) {
         ctx.body = {
             success: false,
@@ -63,15 +51,11 @@ let start = async ctx => {
 
 let stop = async ctx => {
     try {
-        await etm.stop()
-            .then(res => {
-                ctx.body = {
-                    success: true,
-                    results: res
-                };
-            }).catch(err => {
-                throw err;
-            });
+        let res = await etm.stop();
+        ctx.body = {
+            success: true,
+            results: res
+        };
     } catch (err) {
         ctx.body = {
             success: false,
@@ -82,15 +66,11 @@ let stop = async ctx => {
 
 let pause = async ctx => {
     try {
-        await etm.pause()
-            .then(res => {
-                ctx.body = {
-                    success: true,
-                    results: res
-                };
-            }).catch(err => {
-                throw err;
-            });
+        let res = await etm.pause();
+        ctx.body = {
+            success: true,
+            results: res
+        };
     } catch (err) {
         ctx.body = {
             success: false,
@@ -101,15 +81,11 @@ let pause = async ctx => {
 
 let restart = async ctx => {
     try {
-        await etm.restart()
-            .then(res => {
-                ctx.body = {
-                    success: true,
-                    results: res
-                };
-            }).catch(err => {
-                throw err;
-            });
+        let res = await etm.restart();
+        ctx.body = {
+            success: true,
+            results: res
+        };
     } catch (err) {
         ctx.body = {
             success: false,
@@ -120,15 +96,11 @@ let restart = async ctx => {
 
 let setBoot = async ctx => {
     try {
-        await boot.boot()
-            .then(res => {
-                ctx.body = {
-                    success: true,
-                    results: res
-                };
-            }).catch(err => {
-                throw err;
-            });
+        let res = await boot.boot();
+        ctx.body = {
+            success: true,
+            results: res
+        };
     } catch (err) {
         ctx.body = {
             success: false,
@@ -139,15 +111,11 @@ let setBoot = async ctx => {
 
 let setUnboot = async ctx => {
     try {
-        await boot.unboot()
-            .then(res => {
-                ctx.body = {
-                    success: true,
-                    results: res
-                };
-            }).catch(err => {
-                throw err;
-            });
+        let res = await boot.unboot();
+        ctx.body = {
+            success: true,
+            results: res
+        };
     } catch (err) {
         ctx.body = {
             success: false,
@@ -158,15 +126,11 @@ let setUnboot = async ctx => {
 
 let isboot = async ctx => {
     try {
-        await boot.isboot()
-            .then(res => {
-                ctx.body = {
-                    success: true,
-                    results: res
-                };
-            }).catch(err => {
-                throw err;
-            });
+        let res = await boot.isboot();
+        ctx.body = {
+            success: true,
+            results: res
+        };
     } catch (err) {
         ctx.body = {
             success: false,

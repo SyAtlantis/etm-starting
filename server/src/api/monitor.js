@@ -7,25 +7,21 @@ const chain = require('../libs/chain');
 
 let getNetInfo = async ctx => {
     try {
-        await axios.get('http://ip-api.com/json/')
-            .then(res => {
-                // console.log(res.data.query);
-                if (res.data && res.data.query) {
-                    let netInfo = {
-                        publicIp: res.data.query
-                    }
+        let res = await axios.get('http://ip-api.com/json/');
+        // console.log(res.data.query);
+        if (res.data && res.data.query) {
+            let netInfo = {
+                publicIp: res.data.query
+            }
 
-                    ctx.body = {
-                        success: true,
-                        results: netInfo
-                    };
-                }
-                else {
-                    throw new Error("The api can't get publicIp!");
-                }
-            }).catch(err => {
-                throw err;
-            });
+            ctx.body = {
+                success: true,
+                results: netInfo
+            };
+        }
+        else {
+            throw new Error("The api can't get publicIp!");
+        }
     } catch (err) {
         ctx.body = {
             success: false,
@@ -36,17 +32,12 @@ let getNetInfo = async ctx => {
 
 let getGpuInfo = async ctx => {
     try {
-        await si.graphics()
-            .then(res => {
-                // console.log(res.controllers);
-                ctx.body = {
-                    success: true,
-                    results: res.controllers
-                };
-            })
-            .catch(err => {
-                throw err;
-            });
+        let res = await si.graphics();
+        // console.log(res.controllers);
+        ctx.body = {
+            success: true,
+            results: res.controllers
+        };
     } catch (err) {
         ctx.body = {
             success: false,
@@ -57,15 +48,11 @@ let getGpuInfo = async ctx => {
 
 let getProcInfo = async ctx => {
     try {
-        await etm.getStatus()
-            .then(res => {
-                ctx.body = {
-                    success: true,
-                    results: { status: res }
-                };
-            }).catch(err => {
-                throw err;
-            });
+        let res = await etm.getStatus();
+        ctx.body = {
+            success: true,
+            results: { status: res }
+        };
     } catch (err) {
         ctx.body = {
             success: false,
@@ -76,22 +63,18 @@ let getProcInfo = async ctx => {
 
 let getSyncInfo = async ctx => {
     try {
-        await chain.getSyncInfo()
-            .then(res => {
-                // console.log(res);
-                if (res.data && res.data.success) {
+        let res = await chain.getSyncInfo();
+        // console.log(res);
+        if (res.data && res.data.success) {
 
-                    ctx.body = {
-                        success: true,
-                        results: res.data
-                    };
-                }
-                else {
-                    throw new Error(res.data.error);
-                }
-            }).catch(err => {
-                throw err;
-            });
+            ctx.body = {
+                success: true,
+                results: res.data
+            };
+        }
+        else {
+            throw new Error(res.data.error);
+        }
     } catch (err) {
         ctx.body = {
             success: false,
@@ -102,22 +85,17 @@ let getSyncInfo = async ctx => {
 
 let getBlockInfo = async ctx => {
     try {
-        await chain.getBlockInfo()
-            .then(res => {
-                // console.log(res);
-                if (res.data && res.data.success) {
+        let res = await chain.getBlockInfo();
+        if (res.data && res.data.success) {
 
-                    ctx.body = {
-                        success: true,
-                        results: res.data.delegate
-                    };
-                }
-                else {
-                    throw res.data.error;
-                }
-            }).catch(err => {
-                throw err;
-            });
+            ctx.body = {
+                success: true,
+                results: res.data.delegate
+            };
+        }
+        else {
+            throw res.data.error;
+        }
     } catch (err) {
         ctx.body = {
             success: false,

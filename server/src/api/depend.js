@@ -6,15 +6,11 @@ const etm = require('../libs/etm');
 
 let getNodeInfo = async ctx => {
     try {
-        await node.getNodeVersion()
-            .then(res => {
-                ctx.body = {
-                    success: true,
-                    results: res
-                };
-            }).catch(err => {
-                throw err;
-            });
+        let res = await node.getNodeVersion();
+        ctx.body = {
+            success: true,
+            results: res
+        };
     } catch (err) {
         ctx.body = {
             success: false,
@@ -25,19 +21,15 @@ let getNodeInfo = async ctx => {
 
 let getPm2Info = async ctx => {
     try {
-        await pm2.getPm2Version()
-            .then(res => {
-                if (res instanceof String && res.length > 10) {
-                    let arr = res.split(" ");
-                    res = arr[arr.length - 1];
-                }
-                ctx.body = {
-                    success: true,
-                    results: res
-                };
-            }).catch(err => {
-                throw err;
-            });
+        let res = await pm2.getPm2Version();
+        if (res instanceof String && res.length > 10) {
+            let arr = res.split(" ");
+            res = arr[arr.length - 1];
+        }
+        ctx.body = {
+            success: true,
+            results: res
+        };
     } catch (err) {
         ctx.body = {
             success: false,
@@ -48,15 +40,11 @@ let getPm2Info = async ctx => {
 
 let getEtmInfo = async ctx => {
     try {
-        await etm.getEtmVersion()
-            .then(res => {
-                ctx.body = {
-                    success: true,
-                    results: res
-                };
-            }).catch(err => {
-                throw err;
-            });
+        let res = await etm.getEtmVersion();
+        ctx.body = {
+            success: true,
+            results: res
+        };
     } catch (err) {
         ctx.body = {
             success: false,
@@ -67,15 +55,11 @@ let getEtmInfo = async ctx => {
 
 let installNode = async ctx => {
     try {
-        await node.linkNode()
-            .then(res => {
-                ctx.body = {
-                    success: true,
-                    results: res
-                };
-            }).catch(err => {
-                throw err;
-            });
+        let res = await node.linkNode();
+        ctx.body = {
+            success: true,
+            results: res
+        };
     } catch (err) {
         ctx.body = {
             success: false,
@@ -86,15 +70,11 @@ let installNode = async ctx => {
 
 let installPm2 = async ctx => {
     try {
-        await pm2.linkPm2()
-            .then(res => {
-                ctx.body = {
-                    success: true,
-                    results: res
-                };
-            }).catch(err => {
-                throw err;
-            });
+        let res = await pm2.linkPm2();
+        ctx.body = {
+            success: true,
+            results: res
+        };
     } catch (err) {
         ctx.body = {
             success: false,
@@ -105,15 +85,11 @@ let installPm2 = async ctx => {
 
 let installEtm = async ctx => {
     try {
-        await etm.installEtm()
-            .then(res => {
-                ctx.body = {
-                    success: true,
-                    results: res
-                };
-            }).catch(err => {
-                throw err;
-            });
+        let res = await etm.installEtm();
+        ctx.body = {
+            success: true,
+            results: res
+        };
     } catch (err) {
         ctx.body = {
             success: false,
@@ -124,15 +100,11 @@ let installEtm = async ctx => {
 
 let uninstallNode = async ctx => {
     try {
-        await node.unlinkNode()
-            .then(res => {
-                ctx.body = {
-                    success: true,
-                    results: res
-                };
-            }).catch(err => {
-                throw err;
-            });
+        let res = await node.unlinkNode();
+        ctx.body = {
+            success: true,
+            results: res
+        };
     } catch (err) {
         ctx.body = {
             success: false,
@@ -143,15 +115,11 @@ let uninstallNode = async ctx => {
 
 let uninstallPm2 = async ctx => {
     try {
-        await pm2.unlinkPm2()
-            .then(res => {
-                ctx.body = {
-                    success: true,
-                    results: res
-                };
-            }).catch(err => {
-                throw err;
-            });
+        let res = await pm2.unlinkPm2();
+        ctx.body = {
+            success: true,
+            results: res
+        };
     } catch (err) {
         ctx.body = {
             success: false,
@@ -162,15 +130,11 @@ let uninstallPm2 = async ctx => {
 
 let uninstallEtm = async ctx => {
     try {
-        await etm.unistallEtm()
-            .then(res => {
-                ctx.body = {
-                    success: true,
-                    results: res
-                };
-            }).catch(err => {
-                throw err;
-            });
+        let res = await etm.unistallEtm();
+        ctx.body = {
+            success: true,
+            results: res
+        };
     } catch (err) {
         ctx.body = {
             success: false,
