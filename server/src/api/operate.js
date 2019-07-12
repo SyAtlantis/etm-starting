@@ -6,11 +6,18 @@ const chain = require('../libs/chain');
 
 let getMinerInfo = async ctx => {
     try {
-        let res = await chain.getMinerInfo();
-        ctx.body = {
-            success: true,
-            results: res
-        };
+        let res1 = await chain.getMinerInfo();
+        let res2 = await chain.getStatus();
+        if (res1.data && res1.data.delegate && res2.data) {
+            let res = Object.assign({}, res1.data.delegate, res2.data)
+            ctx.body = {
+                success: true,
+                results: res
+            };
+        }
+        else {
+            throw Error("The api can't get miner info!");
+        }
     } catch (err) {
         ctx.body = {
             success: false,

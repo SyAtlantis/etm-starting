@@ -32,10 +32,10 @@
       <a-icon slot="foot-right" v-show="page == 0" type="pic-right" @click="toMonitor" />-->
       <!-- <div slot="head-center"></div> -->
       <div slot="body">
-        <Control v-show="page===0" />
-        <Depend v-show="page===1" />
-        <Setting v-show="page===2" />
-        <Monitor v-show="page===3" />
+        <Control v-if="page===0" />
+        <Depend v-if="page===1" />
+        <Setting v-if="page===2" />
+        <Monitor v-if="page===3" />
       </div>
       <div slot="foot">©2019 En-Tan-Mo. All Rights Reserved.</div>
     </Layout>

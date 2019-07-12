@@ -24,7 +24,11 @@ export default {
         },
         loading: {
           color: "#f7c443",
-          icon: "info-circle"
+          icon: "clock-circle"
+        },
+        notrun: {
+          color: "#3f91f7",
+          icon: "stop"
         }
       }
     };
@@ -33,7 +37,7 @@ export default {
     type: {
       type: String,
       validator: function(value) {
-        return ["normal", "error", "loading"].indexOf(value) !== -1;
+        return ["normal", "error", "loading", "notrun"].indexOf(value) !== -1;
       }
     }
   },

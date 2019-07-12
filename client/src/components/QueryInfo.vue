@@ -65,8 +65,8 @@ export default {
 
       this.func1()
         .then(res => {
-          let { data } = res;
-          if (!data || res.status !== 200) {
+          let { data, status } = res;
+          if (!data || status !== 200) {
             throw new Error("Result data or status error!");
           }
 
@@ -100,7 +100,7 @@ export default {
           this.status = "checkfail";
           this.$store.state.depend[this.name].status = "checkfail";
 
-          // this.$message.error(`check ${this.name} error=>${err}`);
+          this.$message.error(`check ${this.name} error=>${err}`);
           console.log(`check ${this.name} error=>${err}`);
         });
     },
@@ -110,8 +110,8 @@ export default {
 
       this.func2()
         .then(res => {
-          let { data } = res;
-          if (!data || res.status !== 200) {
+          let { data, status } = res;
+          if (!data || status !== 200) {
             throw new Error("Result data or status error!");
           }
 
@@ -124,9 +124,9 @@ export default {
             this.spinning = false;
             this.status = "installfail";
 
-            // this.$message.warning(
-            //   `install ${this.name} failure=>${data.message}`
-            // );
+            this.$message.warning(
+              `install ${this.name} failure=>${data.message}`
+            );
             console.log(`install ${this.name} failure=>${data.message}`);
           }
         })
@@ -134,7 +134,7 @@ export default {
           this.spinning = false;
           this.status = "installfail";
 
-          // this.$message.error(`install ${this.name} error=>${err}`);
+          this.$message.error(`install ${this.name} error=>${err}`);
           console.log(`install ${this.name} error=>${err}`);
         });
     }

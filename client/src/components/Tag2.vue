@@ -18,8 +18,12 @@ export default {
           text: "错误"
         },
         loading: {
-          color: "purple",
+          color: "yellow",
           text: "加载中"
+        },
+        notrun: {
+          color: "blue",
+          text: "未运行"
         }
       }
     };
@@ -28,7 +32,7 @@ export default {
     type: {
       type: String,
       validator: function(value) {
-        return ["normal", "error", "loading"].indexOf(value) !== -1;
+        return ["normal", "error", "loading", "notrun"].indexOf(value) !== -1;
       }
     }
   },

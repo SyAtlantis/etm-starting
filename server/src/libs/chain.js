@@ -23,7 +23,15 @@ class Chain {
 
             let publicKey = this.getPublicKey(secret);
             let url = BASEURL + `/delegates/get?publicKey=${publicKey}`;
-            return await axios.get(url);
+            return await axios.get(url);;
+        } catch (err) {
+            throw err;
+        }
+    }
+    static async getStatus() {
+        try {
+            let url = BASEURL + `/blocks/getStatus`;
+            return await axios.get("http://localhost:4096/api/blocks/getStatus");
         } catch (err) {
             throw err;
         }

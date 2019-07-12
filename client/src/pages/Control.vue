@@ -13,13 +13,23 @@
       <div class="control-view">
         <a-row>
           <a-col :span="8">
-            <HeadInfo title="我的余额" :content="minerInfo.banlance" :center="false" :bordered="true" />
+            <HeadInfo
+              title="我的余额"
+              :content="(minerInfo.balance/100000000)+'ETM'"
+              :center="false"
+              :bordered="true"
+            />
           </a-col>
           <a-col :span="8">
-            <HeadInfo title="出块收益" :content="minerInfo.reward" :center="false" :bordered="true" />
+            <HeadInfo
+              title="出块收益"
+              :content="(minerInfo.rewards/100000000)+'ETM'"
+              :center="false"
+              :bordered="true"
+            />
           </a-col>
           <a-col :span="8">
-            <HeadInfo title="出块率" :content="minerInfo.productivity+'%'" :center="false" />
+            <HeadInfo title="区块高度" :content="minerInfo.height" :center="false" />
           </a-col>
         </a-row>
       </div>
@@ -75,6 +85,9 @@ export default {
       spinning: false
     };
   },
+  mounted() {
+    this.getMinerInfo();
+  },
   computed: {
     minerInfo() {
       return this.$store.state.control.minerInfo;
@@ -120,7 +133,6 @@ export default {
       }
 
       this.getStatus();
-      // this.isboot();
 
       return true;
     },
@@ -161,13 +173,16 @@ export default {
       control
         .getMinerInfo()
         .then(res => {
-          let { data } = res;
-          if (!data || res.status !== 200) {
+          let { data, status } = res;
+          console.log(res);
+          if (!data || status !== 200) {
             throw new Error("Result data or status error!");
           }
 
           if (data.success) {
-            console.log(`get minerInfo success=>${data.results}`);
+            console.log(
+              `get minerInfo success=>${JSON.stringify(data.results)}`
+            );
             this.$store.state.control.minerInfo = data.results;
           } else {
             // this.$message.warning(
@@ -189,8 +204,8 @@ export default {
       control
         .getStatus()
         .then(res => {
-          let { data } = res;
-          if (!data || res.status !== 200) {
+          let { data, status } = res;
+          if (!data || status !== 200) {
             throw new Error("Result data or status error!");
           }
 
@@ -225,8 +240,8 @@ export default {
       control
         .start()
         .then(res => {
-          let { data } = res;
-          if (!data || res.status !== 200) {
+          let { data, status } = res;
+          if (!data || status !== 200) {
             throw new Error("Result data or status error!");
           }
 
@@ -247,8 +262,8 @@ export default {
       control
         .pause()
         .then(res => {
-          let { data } = res;
-          if (!data || res.status !== 200) {
+          let { data, status } = res;
+          if (!data || status !== 200) {
             throw new Error("Result data or status error!");
           }
 
@@ -268,8 +283,8 @@ export default {
       control
         .stop()
         .then(res => {
-          let { data } = res;
-          if (!data || res.status !== 200) {
+          let { data, status } = res;
+          if (!data || status !== 200) {
             throw new Error("Result data or status error!");
           }
 
@@ -293,8 +308,8 @@ export default {
       control
         .redo()
         .then(res => {
-          let { data } = res;
-          if (!data || res.status !== 200) {
+          let { data, status } = res;
+          if (!data || status !== 200) {
             throw new Error("Result data or status error!");
           }
 

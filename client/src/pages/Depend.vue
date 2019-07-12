@@ -92,8 +92,8 @@ export default {
       control
         .isboot()
         .then(res => {
-          let { data } = res;
-          if (!data || res.status !== 200) {
+          let { data, status } = res;
+          if (!data || status !== 200) {
             throw new Error("Result data or status error!");
           }
 
@@ -118,8 +118,8 @@ export default {
         control
           .boot()
           .then(res => {
-            let { data } = res;
-            if (!data || res.status !== 200) {
+            let { data, status } = res;
+            if (!data || status !== 200) {
               throw new Error("Result data or status error!");
             }
 
@@ -141,8 +141,8 @@ export default {
         control
           .unboot()
           .then(res => {
-            let { data } = res;
-            if (!data || res.status !== 200) {
+            let { data, status } = res;
+            if (!data || status !== 200) {
               throw new Error("Result data or status error!");
             }
 

@@ -11,11 +11,15 @@
             size="small"
             type="primary"
             shape="circle"
+            :disabled="item.status ==='notrun'"
             @click="reload(item.name)"
           />
           <Tag2 class="title-tag" :type="item.status" slot="title" />
           <a-avatar slot="avatar" :size="48" shape="square" :src="item.avatar" />
-          <span v-if="item.status == 'error'" slot="description">{{item.message}}</span>
+          <span
+            v-if="item.status == 'error'||item.status == 'notrun'"
+            slot="description"
+          >{{item.message}}</span>
           <div v-else slot="description" v-for="(subItems,i) of item.actions" :key="i">
             <span v-for="({name, value}, index) in subItems" :key="index">
               <span>{{name}} : {{value}}</span>
@@ -162,6 +166,15 @@ export default {
       this.getInfo(name);
     },
     getInfo(name) {
+      if (
+        ["procInfo", "syncInfo", "blockInfo"].includes(name) &&
+        !this.$store.state.control.start
+      ) {
+        this.$store.state.monitor[name].status = "notrun";
+        this.$store.state.monitor[name].message = "项目未启动！";
+        return;
+      }
+
       const funcs = {
         netInfo: monitor.getNetInfo,
         gpuInfo: monitor.getGpuInfo,
@@ -176,8 +189,8 @@ export default {
       func()
         .then(res => {
           console.log(res.data);
-          let { data } = res;
-          if (!data || res.status !== 200) {
+          let { data, status } = res;
+          if (!data || status !== 200) {
             throw new Error("Result data or status error!");
           }
 

@@ -26,9 +26,9 @@ export default new Vuex.Store({
       pause: false,
       boot: false,
       minerInfo: {
-        banlance: 0,
-        reward: 0,
-        productivity: 0
+        balance: 0,
+        rewards: 0,
+        height: 0
       }
     },
     setting: {

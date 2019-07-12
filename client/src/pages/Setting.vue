@@ -138,8 +138,8 @@ export default {
       setting
         .getVulue()
         .then(res => {
-          let { data } = res;
-          if (!data || res.status !== 200) {
+          let { data, status } = res;
+          if (!data || status !== 200) {
             throw new Error("Result data or status error!");
           }
 
