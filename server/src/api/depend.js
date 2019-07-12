@@ -22,7 +22,10 @@ let getNodeInfo = async ctx => {
 let getPm2Info = async ctx => {
     try {
         let res = await pm2.getPm2Version();
-        if (res instanceof String && res.length > 10) {
+        console.log("getPm2Info======1========>", res, typeof res)
+        if ((typeof res) === 'string' && res.length > 20) {
+            // console.log("getPm2Info======2========>", res.match(/\d+(\.\d)*/))
+            // res = res.match(/\d+(\.\d)*/);
             let arr = res.split(" ");
             res = arr[arr.length - 1];
         }

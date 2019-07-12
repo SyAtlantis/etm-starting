@@ -55,12 +55,12 @@ export default new Vuex.Store({
         data: {}
       },
       syncInfo: {
-        status: "loading",
+        status: "error",
         message: "无法获取到同步状态！刷新重试！",
         data: {}
       },
       blockInfo: {
-        status: "normal",
+        status: "error",
         message: "无法获取到出块状态！刷新重试！",
         data: {}
       }

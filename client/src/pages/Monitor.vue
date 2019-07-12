@@ -44,11 +44,7 @@ export default {
     return {};
   },
   mounted() {
-    this.getInfo("netInfo");
-    this.getInfo("gpuInfo");
-    this.getInfo("procInfo");
-    this.getInfo("syncInfo");
-    this.getInfo("blockInfo");
+    this.reload();
   },
   computed: {
     listData() {
@@ -159,17 +155,30 @@ export default {
           ]
         }
       ];
+    },
+    isStart() {
+      return this.$store.state.control.start;
+    }
+  },
+  watch: {
+    isStart: function() {
+      this.reload();
     }
   },
   methods: {
     reload(name) {
-      this.getInfo(name);
+      if (!name) {
+        this.getInfo("netInfo");
+        this.getInfo("gpuInfo");
+        this.getInfo("procInfo");
+        this.getInfo("syncInfo");
+        this.getInfo("blockInfo");
+      } else {
+        this.getInfo(name);
+      }
     },
     getInfo(name) {
-      if (
-        ["procInfo", "syncInfo", "blockInfo"].includes(name) &&
-        !this.$store.state.control.start
-      ) {
+      if (["procInfo", "syncInfo", "blockInfo"].includes(name) && !this.start) {
         this.$store.state.monitor[name].status = "notrun";
         this.$store.state.monitor[name].message = "项目未启动！";
         return;

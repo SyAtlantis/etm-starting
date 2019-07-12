@@ -2,37 +2,42 @@
   <div class="control">
     <a-spin :spinning="spinning" tip="加载中...">
       <div class="control-top">
-        <div class="top-logo" v-if="isInstallAll" @click="reload">
-          <img src="../assets/miner.png" />
+        <div v-if="isInstallAll" class="top-info">
+          <div class="top-logo" @click="reload">
+            <img src="../assets/miner.png" />
+          </div>
+          <div class="top-view">
+            <a-row>
+              <a-col :span="8">
+                <HeadInfo
+                  title="我的余额"
+                  :content="(minerInfo.balance/100000000)+'ETM'"
+                  :center="false"
+                  :bordered="true"
+                />
+              </a-col>
+              <a-col :span="8">
+                <HeadInfo
+                  title="出块收益"
+                  :content="(minerInfo.rewards/100000000)+'ETM'"
+                  :center="false"
+                  :bordered="true"
+                />
+              </a-col>
+              <a-col :span="8">
+                <HeadInfo title="区块高度" :content="minerInfo.height" :center="false" />
+              </a-col>
+            </a-row>
+          </div>
         </div>
         <div class="top-depend" v-else>
           <div class="top-tip">项目运行所依赖的环境尚未配置完全，点击进入配置！</div>
-          <a-button class="top-btn" type="primary" @click="toDepend">配置环境</a-button>
+          <div class="top-btn">
+            <a-button class="top-button" type="primary" @click="toDepend">配置环境</a-button>
+          </div>
         </div>
       </div>
-      <div class="control-view">
-        <a-row>
-          <a-col :span="8">
-            <HeadInfo
-              title="我的余额"
-              :content="(minerInfo.balance/100000000)+'ETM'"
-              :center="false"
-              :bordered="true"
-            />
-          </a-col>
-          <a-col :span="8">
-            <HeadInfo
-              title="出块收益"
-              :content="(minerInfo.rewards/100000000)+'ETM'"
-              :center="false"
-              :bordered="true"
-            />
-          </a-col>
-          <a-col :span="8">
-            <HeadInfo title="区块高度" :content="minerInfo.height" :center="false" />
-          </a-col>
-        </a-row>
-      </div>
+
       <div class="control-operate">
         <a-button-group class="control-btns">
           <a-button
@@ -86,11 +91,35 @@ export default {
     };
   },
   mounted() {
-    if (this.$store.state.control.start) {
+    if (this.isStart) {
       this.getMinerInfo();
     }
   },
+  watch: {
+    isStart: function() {
+      this.getMinerInfo();
+    },
+    isInstallAll: function() {
+      this.getStatus();
+    }
+  },
   computed: {
+    isStart() {
+      return this.$store.state.control.start;
+    },
+    isInstallAll() {
+      if (this.$store.state.depend.etmInfo.status != "installed") {
+        return false;
+      }
+      if (this.$store.state.depend.nodeInfo.status != "installed") {
+        return false;
+      }
+      if (this.$store.state.depend.pm2Info.status != "installed") {
+        return false;
+      }
+
+      return true;
+    },
     minerInfo() {
       return this.$store.state.control.minerInfo;
     },
@@ -123,40 +152,23 @@ export default {
         }
       ];
     },
-    isInstallAll() {
-      if (this.$store.state.depend.etmInfo.status != "installed") {
-        return false;
-      }
-      if (this.$store.state.depend.nodeInfo.status != "installed") {
-        return false;
-      }
-      if (this.$store.state.depend.pm2Info.status != "installed") {
-        return false;
-      }
-
-      this.getStatus();
-
-      return true;
-    },
     canStart() {
       if (!this.isInstallAll) {
         return false;
       }
-      if (this.$store.state.control.start && !this.$store.state.control.pause) {
+      if (this.isStart && !this.$store.state.control.pause) {
         return false;
       }
       return true;
     },
     canPause() {
-      return (
-        this.$store.state.control.start && !this.$store.state.control.pause
-      );
+      return this.isStart && !this.$store.state.control.pause;
     },
     canStop() {
-      return this.$store.state.control.start;
+      return this.isStart;
     },
     canRedo() {
-      return this.$store.state.control.start;
+      return this.isStart;
     }
   },
   methods: {
@@ -343,16 +355,22 @@ export default {
 
   .control-top {
     width: 100%;
-    height: 150px;
-    display: flex;
-    justify-content: center;
+    height: 230px;
 
-    .top-logo {
-      cursor: pointer;
+    .top-info {
+      .top-logo {
+        display: flex;
+        justify-content: center;
+        cursor: pointer;
 
-      img {
-        width: 150px;
-        height: 130px;
+        img {
+          width: 150px;
+          height: 130px;
+        }
+      }
+
+      .top-view {
+        padding: 12px 0px;
       }
     }
 
@@ -362,19 +380,19 @@ export default {
       align-items: center;
 
       .top-tip {
-        padding: 10px;
+        padding: 20px;
         font-size: 16px;
         color: red;
       }
       .top-btn {
-        width: 150px;
-        height: 60px;
+        padding-top: 30px;
+
+        .top-button {
+          width: 150px;
+          height: 60px;
+        }
       }
     }
-  }
-
-  .control-view {
-    padding: 12px 0px;
   }
 
   .control-operate {
