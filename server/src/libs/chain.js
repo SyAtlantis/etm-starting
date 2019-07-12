@@ -18,7 +18,7 @@ class Chain {
         try {
             let secret = config.forging.secret[0];
             if (!secret) {
-                throw "This miner did not set secret!";
+                throw Error("This miner did not set secret!");
             }
 
             let publicKey = this.getPublicKey(secret);
@@ -42,7 +42,7 @@ class Chain {
         try {
             let secret = config.forging.secret[0];
             if (!secret) {
-                throw "This miner did not set secret!";
+                throw Error("This miner did not set secret!");
             }
 
             let publicKey = this.getPublicKey(secret);

@@ -46,7 +46,7 @@ class Pm2 {
                     ];
                     fs.writeFileSync(srcPath, commands.join("\r\n"));
                     if (!fs.existsSync(srcPath)) {
-                        throw (new Error("Create pm2 command failure."));
+                        throw Error("Create pm2 command failure.");
                     }
                 }
             }

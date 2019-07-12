@@ -31,12 +31,15 @@ let setVulue = async ctx => {
 
         let configJson = File.readConfig();
 
-        configJson.port = params.port;
-        configJson.peerPort = (parseInt(params.port) + 1).toString();
+        let port = parseInt(params.port);
+        let peerList = JSON.parse(params.peers);
+
+        configJson.port = port.toString();
+        configJson.peerPort = (port + 1).toString();
         configJson.publicIp = params.publicIp;
         configJson.forging.secret = [params.secret];
         configJson.magic = params.magic;
-        configJson.peers.list = JSON.parse(params.peers);
+        configJson.peers.list = peerList;
 
         File.writeConfig(configJson);
 

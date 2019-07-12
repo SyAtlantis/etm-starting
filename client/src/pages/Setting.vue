@@ -84,7 +84,7 @@
                   rules: [{
                   type: 'string', message: 'The input is not valid peers', 
                   }, ,{
-                  validator: checkSecret
+                  validator: checkPeers
                   }],
                   initialValue: this.$store.state.setting.peers,
                 }
@@ -129,6 +129,7 @@ export default {
           console.log("Received values of form: ", values);
           this.save(values);
         }
+        console.log("Input parameter error");
       });
     },
     query() {
@@ -165,6 +166,7 @@ export default {
         });
     },
     save(data) {
+      console.log("save");
       this.spinning = true;
 
       setting
@@ -227,7 +229,15 @@ export default {
       cb();
     },
     checkPeers(rule, value, cb) {
-      cb();
+      try {
+        if (JSON.parse(value) instanceof Array) {
+          cb();
+        } else {
+          return cb("The peer is not array!");
+        }
+      } catch (error) {
+        return cb("The peer is not array!");
+      }
     }
   }
 };

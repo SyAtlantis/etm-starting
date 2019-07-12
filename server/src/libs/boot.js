@@ -177,7 +177,7 @@ class Boot {
         } else if (process.platform === "darwin") {
             return await _startup_linux();
         } else {
-            throw new Error(`Unsupported os[${process.platform}]`);
+            throw Error(`Unsupported os[${process.platform}]`);
         }
     }
 
@@ -189,7 +189,7 @@ class Boot {
         } else if (process.platform === "darwin") {
             return await _unstartup_linux();
         } else {
-            throw new Error(`Unsupported os[${process.platform}]`);
+            throw Error(`Unsupported os[${process.platform}]`);
         }
     }
 

@@ -20,7 +20,7 @@ let getNetInfo = async ctx => {
             };
         }
         else {
-            throw new Error("The api can't get publicIp!");
+            throw Error("The api can't get publicIp!");
         }
     } catch (err) {
         ctx.body = {
@@ -73,7 +73,7 @@ let getSyncInfo = async ctx => {
             };
         }
         else {
-            throw new Error(res.data.error);
+            throw res.data.error;
         }
     } catch (err) {
         ctx.body = {

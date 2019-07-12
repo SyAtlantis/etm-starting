@@ -23,11 +23,11 @@ class Etm {
     }
 
     static async installEtm() {
-        throw "Method is not implemented temporarily!";
+        throw Error("Method is not implemented temporarily!");
     }
 
     static async unistallEtm() {
-        throw "Method is not implemented temporarily!";
+        throw Error("Method is not implemented temporarily!");
     }
 
     static async getStatus() {
@@ -48,10 +48,10 @@ class Etm {
                     return status;
                 }
                 else {
-                    throw ("Not found status!");
+                    throw Error("Not found status!");
                 }
             } else {
-                throw ("pm2 jlist res not a string array!");
+                throw Error("pm2 jlist res not a string array!");
             }
         } catch (err) {
             throw err;
