@@ -28,7 +28,7 @@ export default new Vuex.Store({
       minerInfo: {
         balance: 0,
         rewards: 0,
-        height: 0
+        height: "--"
       }
     },
     setting: {

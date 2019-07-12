@@ -25,17 +25,11 @@
         @click="toMonitor"
         :style="{color:page ===3?'#1890ff':'',cursor:'pointer'}"
       />
-
-      <!-- <a-icon slot="head-left" v-if="page == 0" type="schedule" @click="toDepand" />
-      <a-icon slot="head-left" v-else type="home" @click="toControl" />
-      <a-icon slot="head-right" v-show="page == 0" type="setting" @click="toSetting" />
-      <a-icon slot="foot-right" v-show="page == 0" type="pic-right" @click="toMonitor" />-->
-      <!-- <div slot="head-center"></div> -->
       <div slot="body">
-        <Control v-if="page===0" />
-        <Depend v-if="page===1" />
-        <Setting v-if="page===2" />
-        <Monitor v-if="page===3" />
+        <Control v-show="page===0" />
+        <Depend v-show="page===1" />
+        <Setting v-show="page===2" />
+        <Monitor v-show="page===3" />
       </div>
       <div slot="foot">©2019 En-Tan-Mo. All Rights Reserved.</div>
     </Layout>

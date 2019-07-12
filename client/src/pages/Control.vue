@@ -86,7 +86,9 @@ export default {
     };
   },
   mounted() {
-    this.getMinerInfo();
+    if (this.$store.state.control.start) {
+      this.getMinerInfo();
+    }
   },
   computed: {
     minerInfo() {

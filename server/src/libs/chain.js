@@ -31,7 +31,7 @@ class Chain {
     static async getStatus() {
         try {
             let url = BASEURL + `/blocks/getStatus`;
-            return await axios.get("http://localhost:4096/api/blocks/getStatus");
+            return await axios.get(url);
         } catch (err) {
             throw err;
         }
