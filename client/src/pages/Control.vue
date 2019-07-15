@@ -10,16 +10,16 @@
             <a-row>
               <a-col :span="8">
                 <HeadInfo
-                  title="我的余额"
-                  :content="(minerInfo.balance/100000000)+'ETM'"
+                  title="我的余额(ETM)"
+                  :content="(minerInfo.balance/100000000)"
                   :center="false"
                   :bordered="true"
                 />
               </a-col>
               <a-col :span="8">
                 <HeadInfo
-                  title="出块收益"
-                  :content="(minerInfo.rewards/100000000)+'ETM'"
+                  title="出块收益(ETM)"
+                  :content="(minerInfo.rewards/100000000)"
                   :center="false"
                   :bordered="true"
                 />
