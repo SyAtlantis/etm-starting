@@ -1,5 +1,4 @@
 
-
 class Renderer {
     constructor(ipcRenderer) {
         this.ipcRenderer = ipcRenderer;
@@ -8,24 +7,36 @@ class Renderer {
     async get(uri, data) {
         this.ipcRenderer.send(uri, data);
 
-        this.ipcRenderer.on(uri, (event, res) => {
-            return res;
+        return new Promise((resolve, rejects) => {
+            void (rejects);
+            this.ipcRenderer.on(uri, (event, res) => {
+                void (event);
+                return resolve(res);
+            });
         });
     }
 
     async post(uri, data) {
         this.ipcRenderer.send(uri, data);
 
-        this.ipcRenderer.on(uri, (event, res) => {
-            return res;
+        return new Promise((resolve, rejects) => {
+            void (rejects);
+            this.ipcRenderer.on(uri, (event, res) => {
+                void (event);
+                return resolve(res);
+            });
         });
     }
 
     async put(uri, data) {
         this.ipcRenderer.send(uri, data);
 
-        this.ipcRenderer.on(uri, (event, res) => {
-            return res;
+        return new Promise((resolve, rejects) => {
+            void (rejects);
+            this.ipcRenderer.on(uri, (event, res) => {
+                void (event);
+                return resolve(res);
+            });
         });
     }
 

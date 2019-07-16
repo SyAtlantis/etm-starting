@@ -65,6 +65,9 @@ export default {
 
       this.func1()
         .then(res => {
+          console.log(
+            `check ${this.name}================> ${JSON.stringify(res)}`
+          );
           let { data, status } = res;
           if (!data || status !== 200) {
             throw new Error("Result data or status error!");

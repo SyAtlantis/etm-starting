@@ -21,33 +21,45 @@ class Router {
                 request: {
                     body: arg
                 }
-            }
-            await func(ctx);
-            event.reply(url, ctx);
+            };
+            func(ctx)
+                .then(() => {
+                    event.reply(url, { data: ctx.body, status: 200 });
+                }).catch(() => {
+                    event.reply(url, { data: ctx.body, status: 200 });
+                });
         });
     }
 
-    async post() {
+    async post(url, func) {
         ipcMain.on(url, (event, arg) => {
             let ctx = {
                 request: {
                     body: arg
                 }
-            }
-            await func(ctx);
-            event.reply(url, ctx);
+            };
+            func(ctx)
+                .then(() => {
+                    event.reply(url, { data: ctx.body, status: 200 });
+                }).catch(() => {
+                    event.reply(url, { data: ctx.body, status: 200 });
+                });
         });
     }
 
-    async put() {
+    async put(url, func) {
         ipcMain.on(url, (event, arg) => {
             let ctx = {
                 request: {
                     body: arg
                 }
-            }
-            await func(ctx);
-            event.reply(url, ctx);
+            };
+            func(ctx)
+                .then(() => {
+                    event.reply(url, { data: ctx.body, status: 200 });
+                }).catch(() => {
+                    event.reply(url, { data: ctx.body, status: 200 });
+                });
         });
     }
 }
