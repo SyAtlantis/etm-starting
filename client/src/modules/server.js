@@ -1,52 +1,34 @@
 import Axios from "axios";
+import Renderer from "./renderer";
 
-// const ipcRenderer = window.electronIpcRenderer;
+const ipcRenderer = window.electronIpcRenderer;
 
 class Server {
   constructor() {
-    this.$ajax = Axios.create({
-      baseURL: 'http://localhost:7788',
-      timeout: "6000",
-      headers: {
-        "X-Custom-Header": "foobar"
-      }
-    });
+    if (ipcRenderer) {
+      this.$ajax = new Renderer(ipcRenderer);
+    }
+    else {
+      this.$ajax = Axios.create({
+        baseURL: 'http://localhost:7788',
+        timeout: "6000",
+        headers: {
+          "X-Custom-Header": "foobar"
+        }
+      });
+    }
   }
 
   async get(uri, data) {
-    // if (ipcRenderer) {
-    //   ipcRenderer.send(uri, { params: data });
-    //   ipcRenderer.on(uri, (event, res) => {
-    //     return res;
-    //   });
-    // }
-    // else {
     return await this.$ajax.get(uri, { params: data });
-    // }
   }
 
   async post(uri, data) {
-    // if (ipcRenderer) {
-    //   ipcRenderer.send(uri, { params: data });
-    //   ipcRenderer.on(uri, (event, res) => {
-    //     return res;
-    //   });
-    // }
-    // else {
     return await this.$ajax.post(uri, { params: data });
-    // }
   }
 
   async put(uri, data) {
-    // if (ipcRenderer) {
-    //   ipcRenderer.send(uri, { params: data });
-    //   ipcRenderer.on(uri, (event, res) => {
-    //     return res;
-    //   });
-    // }
-    // else {
     return await this.$ajax.put(uri, { params: data });
-    // }
   }
 }
 

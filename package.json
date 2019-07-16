@@ -1,6 +1,6 @@
 {
   "name": "etm-starting",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "entanmo starting",
   "homepage": ".",
   "main": "app.js",

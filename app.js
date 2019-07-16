@@ -23,9 +23,14 @@ let createWindow = () => {
         mainWindow = null
     });
 
-    // 开启子进程启动服务
-    fork(__dirname + "/server/main.js", []);
-    // require("./server");
+    if (true) {
+        // 用主进程与渲染进程处理是消息
+        require(__dirname + "/server/ipcMain.js");
+    }
+    else {
+        // 开启子进程启动服务来处理消息
+        fork(__dirname + "/server/main.js", []);
+    }
 }
 
 app.on('ready', createWindow);
