@@ -2,6 +2,8 @@ const { app, BrowserWindow } = require('electron');
 const { fork } = require("child_process");
 const path = require('path');
 
+const IPC_RANDERER = true;
+
 let mainWindow;
 
 let createWindow = () => {
@@ -23,7 +25,7 @@ let createWindow = () => {
         mainWindow = null
     });
 
-    if (true) {
+    if (IPC_RANDERER) {
         // 用主进程与渲染进程处理是消息
         require(__dirname + "/server/ipcMain.js");
     }
