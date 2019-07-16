@@ -38,10 +38,25 @@
     "electronDownload": {
       "version": "5.0.2"
     },
+    "mac": {
+      "icon": "build/icons/icon.icns",
+      "extendInfo": {
+        "LSUIElement": 1
+      }
+    },
     "win": {
+      "icon": "build/icons/logo.ico",
+      "target": "nsis",
       "requestedExecutionLevel": "requireAdministrator"
     },
-    "icon": "./logo.ico",
+    "linux": {
+      "icon": "build/icons/icons",
+      "target": "AppImage"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true
+    },
     "files": [
       "**/*",
       "!.vscode/**/*",
