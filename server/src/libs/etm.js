@@ -61,7 +61,7 @@ class Etm {
 
     static async start() {
         try {
-            let command = `pm2 start ${app} -n ${appName} -- --base ${projDir}`;
+            let command = `pm2 start "${app}" -n "${appName}" -- --base "${projDir}"`;
             return await Shell.exec(command);
         } catch (err) {
             throw err;
@@ -70,7 +70,7 @@ class Etm {
 
     static async pause() {
         try {
-            let command = `pm2 stop ${appName}`;
+            let command = `pm2 stop "${appName}"`;
             return await Shell.exec(command);
         } catch (err) {
             throw err;
@@ -80,7 +80,7 @@ class Etm {
     static async stop() {
         try {
             await this.pause();
-            let command = `pm2 delete ${appName}`;
+            let command = `pm2 delete "${appName}"`;
             return await Shell.exec(command);
         } catch (err) {
             throw err;

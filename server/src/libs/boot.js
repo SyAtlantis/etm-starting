@@ -8,7 +8,7 @@ const projDir = path.resolve(path.join(rootDir, "build/etm"));
 
 const app = `${projDir}/app.js`;
 const appName = "entanmo";
-const deploy_command = `pm2 start ${app} -n ${appName} -- --base ${projDir}`;
+const deploy_command = `pm2 start "${app}" -n "${appName}" -- --base "${projDir}"`;
 
 const WINREG_REG_KEY = "ENTANMO";
 const WINREG_REG_VALUE = path.resolve(path.join(rootDir, "startup.cmd"));
