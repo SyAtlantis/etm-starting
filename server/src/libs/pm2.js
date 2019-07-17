@@ -3,20 +3,9 @@ const path = require("path");
 const File = require("./file");
 const Shell = require("./shell");
 
-const rootDir = File.getRootPath();
-const pm2Dir = path.resolve(path.join(rootDir, "build/pm2"));
+let appPath = File.getAppPath();
 
-let srcPath = (() => {
-    if (process.platform === "win32") {
-        return path.resolve(pm2Dir, "pm2.cmd");
-    } else if (process.platform === "linux") {
-        return path.resolve(pm2Dir, "./node_modules/.bin/pm2");
-    } else if (process.platform === "darwin") {
-        return path.resolve(pm2Dir, "./node_modules/.bin/pm2");
-    } else {
-        throw Error(`Unsupported os[${process.platform}]`);
-    }
-})();
+let srcPath = path.join(appPath, "pm2", "pm2.cmd");
 
 let dstPath = (() => {
     if (process.platform === "win32") {
@@ -45,10 +34,12 @@ class Pm2 {
         try {
             Shell.rm("-f", dstPath);
 
+            await File.installDepend("pm2.zip", appPath);
+
             // windows通过自定义全新cmd文件的方式来进行安装
             if (process.platform === "win32") {
                 if (!fs.existsSync(srcPath)) {
-                    const pm2_command_path = path.join(pm2Dir, "node_modules", "pm2", "bin", "pm2");
+                    const pm2_command_path = path.join(appPath, "pm2", "node_modules", "pm2", "bin", "pm2");
                     const commands = [
                         "@ECHO OFF",
                         "@SETLOCAL",

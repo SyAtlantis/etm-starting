@@ -2,18 +2,20 @@ const path = require("path");
 const File = require("./file");
 const Shell = require("./shell");
 
-const rootDir = File.getRootPath();
-const projDir = path.resolve(path.join(rootDir, "build/etm"));
+// const rootDir = File.getRootPath();
+// const projDir = path.resolve(path.join(rootDir, "build/etm"));
 
-const app = `${projDir}/app.js`;
+const appPath = File.getAppPath();
+const prjPath = File.getPrjPath();
+const app = `${prjPath}/app.js`;
 const appName = "entanmo";
+
 
 class Etm {
 
     static async getEtmVersion() {
         try {
-            let packagePath = File.getPackagePath();
-            const packageJson = require(packagePath);
+            const packageJson = File.readPackage();
             let version = packageJson.version;
             return version;
         } catch (err) {
@@ -23,11 +25,21 @@ class Etm {
     }
 
     static async installEtm() {
-        throw Error("Method is not implemented temporarily!");
+        try {
+            // let appPath = File.getAppPath();
+            return await File.installDepend("etm.zip", appPath);
+        } catch (err) {
+            throw err;
+        }
     }
 
     static async unistallEtm() {
-        throw Error("Method is not implemented temporarily!");
+        try {
+            let prjPath = File.getPrjPath();
+            Shell.rm("-f", prjPath);
+        } catch (err) {
+            throw err;
+        }
     }
 
     static async getStatus() {
@@ -61,7 +73,7 @@ class Etm {
 
     static async start() {
         try {
-            let command = `pm2 start "${app}" -n "${appName}" -- --base "${projDir}"`;
+            let command = `pm2 start "${app}" -n "${appName}" -- --base "${prjPath}"`;
             return await Shell.exec(command);
         } catch (err) {
             throw err;
