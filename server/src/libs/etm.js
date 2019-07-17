@@ -68,15 +68,6 @@ class Etm {
         }
     }
 
-    static async stop() {
-        try {
-            let command = `pm2 delete ${appName}`;
-            return await Shell.exec(command);
-        } catch (err) {
-            throw err;
-        }
-    }
-
     static async pause() {
         try {
             let command = `pm2 stop ${appName}`;
@@ -86,10 +77,22 @@ class Etm {
         }
     }
 
+    static async stop() {
+        try {
+            await this.pause();
+            let command = `pm2 delete ${appName}`;
+            return await Shell.exec(command);
+        } catch (err) {
+            throw err;
+        }
+    }
+
     static async restart() {
         try {
-            let command = `pm2 restart ${appName}`;
-            return await Shell.exec(command);
+            await this.pause();
+            return await this.start();
+            // let command = `pm2 restart ${appName}`;
+            // return await Shell.exec(command);
         } catch (err) {
             throw err;
         }

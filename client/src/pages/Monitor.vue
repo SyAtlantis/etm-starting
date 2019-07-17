@@ -178,7 +178,10 @@ export default {
       }
     },
     getInfo(name) {
-      if (["procInfo", "syncInfo", "blockInfo"].includes(name) && !this.start) {
+      if (
+        ["procInfo", "syncInfo", "blockInfo"].includes(name) &&
+        !this.isStart
+      ) {
         this.$store.state.monitor[name].status = "notrun";
         this.$store.state.monitor[name].message = "项目未启动！";
         return;
