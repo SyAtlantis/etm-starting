@@ -7,19 +7,29 @@ const Shell = require("./shell");
 const rootDir = File.getRootPath();
 const nodeDir = path.resolve(path.join(rootDir, "build/node"));
 
-const nodeSrcPath = {
-    win32: path.resolve(nodeDir, "./win32/runner.exe"),
-    linux: path.resolve(nodeDir, "./linux/runner"),
-    darwin: path.resolve(nodeDir, "./macos/runner")
-};
-const nodeDstPath = {
-    win32: path.resolve(path.join(process.env["SystemRoot"], "System32", "node.exe")),
-    linux: "/usr/local/bin/node",
-    darwin: "/usr/local/bin/node"
-};
+let srcPath = (() => {
+    if (process.platform === "win32") {
+        return path.resolve(nodeDir, "./win32/runner.exe");
+    } else if (process.platform === "linux") {
+        return path.resolve(nodeDir, "./linux/runner");
+    } else if (process.platform === "darwin") {
+        return path.resolve(nodeDir, "./macos/runner");
+    } else {
+        throw Error(`Unsupported os[${process.platform}]`);
+    }
+})();
 
-let srcPath = nodeSrcPath[process.platform];
-let dstPath = nodeDstPath[process.platform];
+let dstPath = (() => {
+    if (process.platform === "win32") {
+        return path.resolve(path.join(process.env["SystemRoot"], "System32", "node.exe"));
+    } else if (process.platform === "linux") {
+        return "/usr/local/bin/node";
+    } else if (process.platform === "darwin") {
+        return "/usr/local/bin/node";
+    } else {
+        throw Error(`Unsupported os[${process.platform}]`);
+    }
+})();
 
 class Node {
 

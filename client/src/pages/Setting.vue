@@ -172,13 +172,21 @@ export default {
       setting
         .setVulue(data)
         .then(res => {
-          console.log(res);
-          this.spinning = false;
-          this.$store.state.setting.publicIp = data.publicIp;
-          this.$store.state.setting.port = data.port;
-          this.$store.state.setting.secret = data.secret;
-          this.$store.state.setting.peers = data.peers;
-          this.$store.state.setting.magic = data.magic;
+          let { data, status } = res;
+          if (!data || status !== 200) {
+            throw new Error("Result data or status error!");
+          }
+
+          if (data.success) {
+            this.spinning = false;
+            this.$store.state.setting.publicIp = data.publicIp;
+            this.$store.state.setting.port = data.port;
+            this.$store.state.setting.secret = data.secret;
+            this.$store.state.setting.peers = data.peers;
+            this.$store.state.setting.magic = data.magic;
+          } else {
+            throw new Error(data.message);
+          }
         })
         .catch(err => {
           console.log(err);

@@ -6,19 +6,30 @@ const Shell = require("./shell");
 const rootDir = File.getRootPath();
 const pm2Dir = path.resolve(path.join(rootDir, "build/pm2"));
 
-const pm2SrcPath = {
-    win32: path.resolve(pm2Dir, "pm2.cmd"),
-    linux: path.resolve(pm2Dir, "./node_modules/.bin/pm2"),
-    darwin: path.resolve(pm2Dir, "./node_modules/.bin/pm2")
-};
-const pm2DstPath = {
-    win32: path.resolve(path.join(process.env["SystemRoot"], "System32", "pm2.cmd")),
-    linux: "/usr/local/bin/pm2",
-    darwin: "/usr/local/bin/pm2"
-}
+let srcPath = (() => {
+    if (process.platform === "win32") {
+        return path.resolve(pm2Dir, "pm2.cmd");
+    } else if (process.platform === "linux") {
+        return path.resolve(pm2Dir, "./node_modules/.bin/pm2");
+    } else if (process.platform === "darwin") {
+        return path.resolve(pm2Dir, "./node_modules/.bin/pm2");
+    } else {
+        throw Error(`Unsupported os[${process.platform}]`);
+    }
+})();
 
-let srcPath = pm2SrcPath[process.platform];
-let dstPath = pm2DstPath[process.platform];
+let dstPath = (() => {
+    if (process.platform === "win32") {
+        return path.resolve(path.join(process.env["SystemRoot"], "System32", "pm2.cmd"));
+    } else if (process.platform === "linux") {
+        return "/usr/local/bin/pm2";
+    } else if (process.platform === "darwin") {
+        return "/usr/local/bin/pm2";
+    } else {
+        throw Error(`Unsupported os[${process.platform}]`);
+    }
+})();
+
 
 class Pm2 {
 
