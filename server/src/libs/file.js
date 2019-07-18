@@ -4,12 +4,10 @@ const unzipper = require('unzipper');
 const { app } = require('electron');
 
 const rootPath = path.resolve(path.join(__dirname, "../../.."));
-// const configPath = path.join(rootPath, "/build/etm/config/config.json");
-// const packagePath = path.join(rootPath, "/build/etm/package.json");
 
 class File {
 
-    static getRootPath() {
+    static getRootPath() {//项目安装目录
         return rootPath;
     }
 
@@ -20,15 +18,6 @@ class File {
     static getPrjPath() {//etm项目目录
         return path.join(this.getAppPath(), "etm");
     }
-
-
-    // static getConfigPath() {
-    //     return path.join(this.getPrjPath(), "config/config.json");
-    // }
-
-    // static getPackagePath() {
-    //     return path.join(this.getPrjPath(), "package.json");
-    // }
 
     static readConfig() {
         let configPath = path.join(this.getPrjPath(), "config/config.json");
@@ -52,7 +41,7 @@ class File {
     }
 
     static async installDepend(resource, appPath) {
-        let srcPath = path.join(rootPath, "build", resource);
+        let srcPath = path.join(rootPath, "assets", resource);
         let readStream = fs.createReadStream(srcPath);
 
         return new Promise((resolve, reject) => {

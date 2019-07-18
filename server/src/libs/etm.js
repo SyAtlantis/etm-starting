@@ -1,9 +1,5 @@
-const path = require("path");
 const File = require("./file");
 const Shell = require("./shell");
-
-// const rootDir = File.getRootPath();
-// const projDir = path.resolve(path.join(rootDir, "build/etm"));
 
 const appPath = File.getAppPath();
 const prjPath = File.getPrjPath();
@@ -26,7 +22,6 @@ class Etm {
 
     static async installEtm() {
         try {
-            // let appPath = File.getAppPath();
             return await File.installDepend("etm.zip", appPath);
         } catch (err) {
             throw err;

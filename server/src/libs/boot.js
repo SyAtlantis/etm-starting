@@ -3,15 +3,15 @@ const Registry = require("winreg");
 const fs = require("fs");
 const File = require("./file");
 
-const rootDir = File.getRootPath();
-const projDir = path.resolve(path.join(rootDir, "build/etm"));
+const appPath = File.getAppPath();
+const prjPath = File.getPrjPath();
 
-const app = `${projDir}/app.js`;
+const app = `${prjPath}/app.js`;
 const appName = "entanmo";
-const deploy_command = `pm2 start "${app}" -n "${appName}" -- --base "${projDir}"`;
+const deploy_command = `pm2 start "${app}" -n "${appName}" -- --base "${prjPath}"`;
 
 const WINREG_REG_KEY = "ENTANMO";
-const WINREG_REG_VALUE = path.resolve(path.join(rootDir, "startup.cmd"));
+const WINREG_REG_VALUE = path.resolve(path.join(appPath, "startup.cmd"));
 
 const _winreg = () => {
     const RUN_LOCATION = "\\Software\\Microsoft\\Windows\\CurrentVersion\\Run";
@@ -64,7 +64,7 @@ const _winreg_unset = async () => {
 };
 
 const _prepare_startup_cmd = () => {
-    const cwd = path.resolve(rootDir, "../");
+    const cwd = path.resolve(appPath, "../");
     const scripts = [
         `cmd /K`,
         `"cd ${cwd}`,
@@ -93,7 +93,6 @@ const _startup_win32 = async () => {
         }
 
         await _winreg_set();
-        // conf.set(Keys.startuped, Values.startuped);
         return true;
     } catch (error) {
         throw new Error(error.toString());
@@ -105,13 +104,11 @@ const _startup_linux = async () => {
         shelljs.exec("pm2 save", { silent: true }, (code, stdout, stderr) => {
             void (stdout);
             if (code !== 0) {
-                // conf.set(Keys.startuped, Values.unstartuped);
                 return reject(new Error(stderr.toString()));
             }
 
             shelljs.exec("pm2 startup", { silent: true }, (code, stdout, stderr) => {
                 if (code === 0) {
-                    // conf.set(Keys.startuped, Values.startuped);
                     return resolve(true);
                 } else if (code === 1) {
                     const stdoutArray = stdout.split(/[\r|\n|\r\n]/);
@@ -119,11 +116,8 @@ const _startup_linux = async () => {
                     extraCmd = extraCmd === "" ? stdoutArray.pop() : extraCmd;
                     console.log("[Startup] To setup the Startup Script, copy/paste the following command once:\n"
                         + colorWarning(extraCmd));
-                    // conf.set(Keys.startuped, Values.startupPending);
-                    // conf.set(Keys.startup_pending, extraCmd);
                     return resolve(true);
                 } else {
-                    // conf.set(Keys.startuped, Values.unstartuped);
                     return reject(new Error(stderr.toString()));
                 }
             });
@@ -136,7 +130,6 @@ const _unstartup_win32 = async () => {
         if (await _winreg_issetted()) {
             await _winreg_unset();
         }
-        // conf.set(Keys.startuped, Values.unstartuped);
         return true;
     } catch (error) {
         throw new Error(error.toString());
@@ -147,7 +140,6 @@ const _unstartup_linux = async () => {
     return new Promise((resolve, reject) => {
         shelljs.exec("pm2 unstartup", { silent: true }, (code, stdout, stderr) => {
             if (code === 0) {
-                // conf.set(Keys.startuped, Values.startuped);
                 return resolve(true);
             } else if (code === 1) {
                 const stdoutArray = stdout.split(/[\r|\n|\r\n]/);
@@ -155,11 +147,8 @@ const _unstartup_linux = async () => {
                 extraCmd = extraCmd === "" ? stdoutArray.pop() : extraCmd;
                 console.log("[Unstartup] To setup the Startup Script, copy/paste the following command once:\n"
                     + colorWarning(extraCmd));
-                // conf.set(Keys.startuped, Values.unstartupPending);
-                // conf.set(Keys.startup_pending, extraCmd);
                 return resolve(true);
             } else {
-                // conf.set(Keys.startuped, Values.unstartuped);
                 return reject(new Error(stderr.toString()));
             }
         });

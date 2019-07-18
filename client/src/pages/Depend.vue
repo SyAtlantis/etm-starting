@@ -76,6 +76,9 @@ export default {
       ]
     };
   },
+  mounted() {
+    this.checkBoot();
+  },
   computed: {
     isSetted() {
       return this.$store.state.setting.port;
@@ -88,7 +91,7 @@ export default {
     toSetting() {
       this.$store.state.page = 2;
     },
-    isboot() {
+    checkBoot() {
       control
         .isboot()
         .then(res => {

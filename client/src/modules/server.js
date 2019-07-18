@@ -17,6 +17,7 @@ class Server {
         }
       });
     }
+    console.log(this.$ajax);
   }
 
   async get(uri, data) {
