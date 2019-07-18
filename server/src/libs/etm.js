@@ -33,6 +33,7 @@ class Etm {
 
     static async installEtm() {
         try {
+            Shell.rm("-rf", path.join(appPath, "etm"));
             return await File.installDepend(assetsName, appPath);
         } catch (err) {
             throw err;

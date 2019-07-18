@@ -5,13 +5,28 @@ const Shell = require("./shell");
 
 let appPath = File.getAppPath();
 
-let srcPath = path.join(appPath, "pm2", "pm2.cmd");
+let srcPath = (() => {
+    if (process.platform === "win32") {
+        return path.join(appPath, "pm2/pm2.cmd");
+    } else if (process.platform === "linux") {
+        return path.join(appPath, "pm2/node_modules/.bin/pm2");
+    } else if (process.platform === "darwin") {
+        return path.join(appPath, "pm2/node_modules/.bin/pm2");
+    } else {
+        throw Error(`Unsupported os[${process.platform}]`);
+    }
+})();
 
 let dstPath = (() => {
     if (process.platform === "win32") {
         return path.resolve(path.join(process.env["SystemRoot"], "System32", "pm2.cmd"));
     } else if (process.platform === "linux") {
-        return "/usr/local/bin/pm2";
+        Shell.exec("whoami")
+            .then(res => {
+                return `/home/${res}/bin/pm2`;
+            }).catch(err => {
+                throw err;
+            });
     } else if (process.platform === "darwin") {
         return "/usr/local/bin/pm2";
     } else {
@@ -32,8 +47,7 @@ class Pm2 {
 
     static async linkPm2() {
         try {
-            Shell.rm("-f", dstPath);
-
+            Shell.rm("-rf", path.join(appPath, "pm2"));
             await File.installDepend("pm2.zip", appPath);
 
             // windows通过自定义全新cmd文件的方式来进行安装
@@ -53,6 +67,7 @@ class Pm2 {
                 }
             }
 
+            Shell.rm("-rf", dstPath);
             return await Shell.ln("-sf", srcPath, dstPath);
         } catch (err) {
             throw err;

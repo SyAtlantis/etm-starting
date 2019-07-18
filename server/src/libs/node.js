@@ -33,7 +33,12 @@ let dstPath = (() => {
     if (process.platform === "win32") {
         return path.resolve(path.join(process.env["SystemRoot"], "System32", "node.exe"));
     } else if (process.platform === "linux") {
-        return "/usr/local/bin/node";
+        Shell.exec("whoami")
+            .then(res => {
+                return `/home/${res}/bin/node`;
+            }).catch(err => {
+                throw err;
+            });
     } else if (process.platform === "darwin") {
         return "/usr/local/bin/node";
     } else {
@@ -53,10 +58,10 @@ class Node {
 
     static async linkNode() {
         try {
-            Shell.rm("-f", dstPath);
-
+            Shell.rm("-rf", path.join(appPath, "node"));
             await File.installDepend(assetsName, appPath);
 
+            Shell.rm("-rf", dstPath);
             return await Shell.ln("-sf", srcPath, dstPath);
         } catch (err) {
             throw err;
