@@ -5,13 +5,25 @@ const Shell = require("./shell");
 
 let appPath = File.getAppPath();
 
+let assetsName = (() => {
+    if (process.platform === "win32") {
+        return "node_win.zip";
+    } else if (process.platform === "linux") {
+        return "node_linux.zip";
+    } else if (process.platform === "darwin") {
+        return "node_mac.zip";
+    } else {
+        throw Error(`Unsupported os[${process.platform}]`);
+    }
+})();
+
 let srcPath = (() => {
     if (process.platform === "win32") {
-        return path.resolve(appPath, "./node/win32/runner.exe");
+        return path.resolve(appPath, "./node/runner.exe");
     } else if (process.platform === "linux") {
-        return path.resolve(appPath, "./node/linux/runner");
+        return path.resolve(appPath, "./node/runner");
     } else if (process.platform === "darwin") {
-        return path.resolve(appPath, "./node/macos/runner");
+        return path.resolve(appPath, "./node/runner");
     } else {
         throw Error(`Unsupported os[${process.platform}]`);
     }
@@ -43,7 +55,7 @@ class Node {
         try {
             Shell.rm("-f", dstPath);
 
-            await File.installDepend("node.zip", appPath);
+            await File.installDepend(assetsName, appPath);
 
             return await Shell.ln("-sf", srcPath, dstPath);
         } catch (err) {

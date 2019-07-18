@@ -48,20 +48,33 @@
     "win": {
       "icon": "build/icons/logo.ico",
       "target": "nsis",
-      "requestedExecutionLevel": "requireAdministrator"
+      "requestedExecutionLevel": "requireAdministrator",
+      "files": [
+        "**/*",
+        "!.vscode",
+        "!client",
+        "!assets",
+        "assets/etm_win.zip",
+        "assets/node_win.zip",
+        "assets/pm2.zip"
+      ]
     },
     "linux": {
       "icon": "build/icons/logos",
-      "target": "AppImage"
+      "target": "AppImage",
+      "files": [
+        "**/*",
+        "!.vscode",
+        "!client",
+        "!assets",
+        "assets/etm_linux.zip",
+        "assets/node_linux.zip",
+        "assets/pm2.zip"
+      ]
     },
     "nsis": {
       "oneClick": false,
       "allowToChangeInstallationDirectory": true
-    },
-    "files": [
-      "**/*",
-      "!.vscode/**/*",
-      "!client/**/*"
-    ]
+    }
   }
 }

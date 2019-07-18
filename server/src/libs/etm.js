@@ -6,6 +6,17 @@ const prjPath = File.getPrjPath();
 const app = `${prjPath}/app.js`;
 const appName = "entanmo";
 
+let assetsName = (() => {
+    if (process.platform === "win32") {
+        return "etm_win.zip";
+    } else if (process.platform === "linux") {
+        return "etm_linux.zip";
+    } else if (process.platform === "darwin") {
+        return "etm_mac.zip";
+    } else {
+        throw Error(`Unsupported os[${process.platform}]`);
+    }
+})();
 
 class Etm {
 
@@ -22,7 +33,7 @@ class Etm {
 
     static async installEtm() {
         try {
-            return await File.installDepend("etm.zip", appPath);
+            return await File.installDepend(assetsName, appPath);
         } catch (err) {
             throw err;
         }
