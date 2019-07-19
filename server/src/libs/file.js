@@ -12,7 +12,10 @@ class File {
     }
 
     static getAppPath() {//资源解压目录
-        return app.getPath("userData");
+        if (app != null) {
+            return app.getPath("userData");
+        }
+        return rootPath;
     }
 
     static getPrjPath() {//etm项目目录

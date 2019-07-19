@@ -3,8 +3,8 @@
     <a-spin :spinning="spinning" tip="加载中...">
       <div class="control-top">
         <div v-if="isInstallAll" class="top-info">
-          <div class="top-logo" @click="reload">
-            <img src="../assets/miner.png" />
+          <div class="top-logo">
+            <img src="../assets/miner.png" @click="reload" />
           </div>
           <div class="top-view">
             <a-row>
@@ -361,11 +361,11 @@ export default {
       .top-logo {
         display: flex;
         justify-content: center;
-        cursor: pointer;
 
         img {
           width: 150px;
           height: 130px;
+          cursor: pointer;
         }
       }
 
