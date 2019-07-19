@@ -50,26 +50,26 @@
       "target": "nsis",
       "requestedExecutionLevel": "requireAdministrator",
       "files": [
-        "**/*",
-        "!.vscode",
-        "!client",
-        "!assets",
         "assets/etm_win.zip",
         "assets/node_win.zip",
-        "assets/pm2.zip"
+        "assets/pm2.zip",
+        "publish",
+        "server",
+        "app.js",
+        "preload.js"
       ]
     },
     "linux": {
       "icon": "build/icons/logos",
       "target": "AppImage",
       "files": [
-        "**/*",
-        "!.vscode",
-        "!client",
-        "!assets",
         "assets/etm_linux.zip",
         "assets/node_linux.zip",
-        "assets/pm2.zip"
+        "assets/pm2.zip",
+        "publish",
+        "server",
+        "app.js",
+        "preload.js"
       ]
     },
     "nsis": {

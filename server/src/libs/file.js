@@ -7,18 +7,21 @@ const rootPath = path.resolve(path.join(__dirname, "../../.."));
 
 class File {
 
-    static getRootPath() {//项目安装目录
+    //项目安装目录
+    static getRootPath() {
         return rootPath;
     }
 
-    static getAppPath() {//资源解压目录
-        if (app != null) {
+    //资源解压目录
+    static getAppPath() {
+        if (app != null) {//启动服务没有app
             return app.getPath("userData");
         }
         return rootPath;
     }
 
-    static getPrjPath() {//etm项目目录
+    //etm项目目录
+    static getPrjPath() {
         return path.join(this.getAppPath(), "etm");
     }
 
