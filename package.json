@@ -19,7 +19,7 @@
   },
   "devDependencies": {
     "electron": "^5.0.4",
-    "electron-builder": "^20.43.0"
+    "electron-builder": "^20.44.4"
   },
   "scripts": {
     "start": "electron .",
@@ -35,9 +35,9 @@
     "productName": "EnTanMo",
     "appId": "com.entanmo.etm",
     "copyright": "EnTanMo",
-    "electronVersion": "5.0.2",
+    "electronVersion": "5.0.4",
     "electronDownload": {
-      "version": "5.0.2"
+      "version": "5.0.4"
     },
     "mac": {
       "icon": "build/icons/logo.icns",
