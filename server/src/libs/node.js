@@ -33,12 +33,13 @@ let dstPath = (() => {
     if (process.platform === "win32") {
         return path.resolve(path.join(process.env["SystemRoot"], "System32", "node.exe"));
     } else if (process.platform === "linux") {
-        Shell.exec("whoami")
-            .then(res => {
-                return `/home/${res}/bin/node`;
-            }).catch(err => {
-                throw err;
-            });
+        // Shell.exec("whoami")
+        //     .then(res => {
+        //         return `/home/${res}/bin/node`;
+        //     }).catch(err => {
+        //         throw err;
+        //     });
+        return "/usr/local/bin/node";
     } else if (process.platform === "darwin") {
         return "/usr/local/bin/node";
     } else {

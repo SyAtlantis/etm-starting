@@ -6,7 +6,7 @@ class Shell {
         return new Promise((resolve, reject) => {
             shell.exec(command, { silent: true }, (code, stdout, stderr) => {
                 if (code === 0) {
-                    return resolve(stdout.toString());
+                    return resolve(stdout.toString().trim());
                 }
 
                 return reject(stderr.toString());

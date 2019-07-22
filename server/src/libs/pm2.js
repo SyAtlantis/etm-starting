@@ -21,12 +21,13 @@ let dstPath = (() => {
     if (process.platform === "win32") {
         return path.resolve(path.join(process.env["SystemRoot"], "System32", "pm2.cmd"));
     } else if (process.platform === "linux") {
-        Shell.exec("whoami")
-            .then(res => {
-                return `/home/${res}/bin/pm2`;
-            }).catch(err => {
-                throw err;
-            });
+        // Shell.exec("whoami")
+        //     .then(res => {
+        //         return `/home/${res}/bin/pm2`;
+        //     }).catch(err => {
+        //         throw err;
+        //     });
+        return "/usr/local/bin/pm2";
     } else if (process.platform === "darwin") {
         return "/usr/local/bin/pm2";
     } else {
