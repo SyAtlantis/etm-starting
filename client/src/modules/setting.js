@@ -11,6 +11,10 @@ class Setting {
     static async setVulue(data) {
         return await server.post("/setting/setVulue", data);
     }
+
+    static async setPassword(data) {
+        return await server.post("/setting/setPassword", data);
+    }
 }
 
 export default Setting;

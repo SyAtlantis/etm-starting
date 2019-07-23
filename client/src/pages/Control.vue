@@ -200,15 +200,17 @@ export default {
             this.$store.state.control.minerInfo = data.results;
           } else {
             // this.$message.warning(
-            //   `get minerInfo failure=>${data.message}`
+            //   `get minerInfo failure===>${JSON.stringify(data.message)}`
             // );
-            console.log(`get minerInfo failure=>${data.message}`);
+            console.log(
+              `get minerInfo failure===>${JSON.stringify(data.message)}`
+            );
           }
           this.spinning = false;
         })
         .catch(err => {
-          // this.$message.error(`get minerInfo error=>${err}`);
-          console.log(`get minerInfo error=>${err}`);
+          // this.$message.error(`get minerInfo error===>${JSON.stringify(err)}`);
+          console.log(`get minerInfo error===>${JSON.stringify(err)}`);
           this.spinning = false;
         });
     },
@@ -224,7 +226,9 @@ export default {
           }
 
           if (data.success) {
-            console.log(`get status success=>${data.results}`);
+            console.log(
+              `get status success===>${JSON.stringify(data.results)}`
+            );
             this.$store.state.control.status = data.results;
 
             if (data.results === "online") {
@@ -238,15 +242,17 @@ export default {
             }
           } else {
             // this.$message.warning(
-            //   `get status failure=>${data.message}`
+            //   `get status failure===>${JSON.stringify(data.message)}`
             // );
-            console.log(`get status failure=>${data.message}`);
+            console.log(
+              `get status failure===>${JSON.stringify(data.message)}`
+            );
           }
           this.spinning = false;
         })
         .catch(err => {
-          // this.$message.error(`get status error=>${err}`);
-          console.log(`get status error=>${err}`);
+          // this.$message.error(`get status error===>${JSON.stringify(err)}`);
+          console.log(`get status error===>${JSON.stringify(err)}`);
           this.spinning = false;
         });
     },
@@ -260,16 +266,16 @@ export default {
           }
 
           if (data.success) {
-            console.log(`start success=>${data.results}`);
+            console.log(`start success===>${JSON.stringify(data.results)}`);
             this.$store.state.control.start = true;
             this.$store.state.control.pause = false;
           } else {
-            console.log(`start failure=>${data.message}`);
+            console.log(`start failure===>${JSON.stringify(data.message)}`);
           }
         })
         .catch(err => {
-          // this.$message.error(`start error=>${err}`);
-          console.log(`start error=>${err}`);
+          // this.$message.error(`start error===>${JSON.stringify(err)}`);
+          console.log(`start error===>${JSON.stringify(err)}`);
         });
     },
     pause() {
@@ -282,15 +288,15 @@ export default {
           }
 
           if (data.success) {
-            console.log(`pause success=>${data.results}`);
+            console.log(`pause success===>${JSON.stringify(data.results)}`);
             this.$store.state.control.pause = true;
           } else {
-            console.log(`pause failure=>${data.message}`);
+            console.log(`pause failure===>${JSON.stringify(data.message)}`);
           }
         })
         .catch(err => {
-          // this.$message.error(`pause error=>${err}`);
-          console.log(`pause error=>${err}`);
+          // this.$message.error(`pause error===>${JSON.stringify(err)}`);
+          console.log(`pause error===>${JSON.stringify(err)}`);
         });
     },
     stop() {
@@ -303,19 +309,19 @@ export default {
           }
 
           if (data.success) {
-            console.log(`stop success=>${data.results}`);
+            console.log(`stop success===>${JSON.stringify(data.results)}`);
             this.$store.state.control.start = false;
             this.$store.state.control.pause = false;
           } else {
             // this.$message.warning(
-            //   `stop failure=>${data.message}`
+            //   `stop failure===>${JSON.stringify(data.message)}`
             // );
-            console.log(`stop failure=>${data.message}`);
+            console.log(`stop failure===>${JSON.stringify(data.message)}`);
           }
         })
         .catch(err => {
-          // this.$message.error(`stop error=>${err}`);
-          console.log(`stop error=>${err}`);
+          // this.$message.error(`stop error===>${JSON.stringify(err)}`);
+          console.log(`stop error===>${JSON.stringify(err)}`);
         });
     },
     redo() {
@@ -328,19 +334,19 @@ export default {
           }
 
           if (data.success) {
-            console.log(`redo success=>${data.results}`);
+            console.log(`redo success===>${JSON.stringify(data.results)}`);
             this.$store.state.control.start = true;
             this.$store.state.control.pause = false;
           } else {
             // this.$message.warning(
-            //   `redo failure=>${data.message}`
+            //   `redo failure===>${JSON.stringify(data.message)}`
             // );
-            console.log(`redo failure=>${data.message}`);
+            console.log(`redo failure===>${JSON.stringify(data.message)}`);
           }
         })
         .catch(err => {
-          // this.$message.error(`redo error=>${err}`);
-          console.log(`redo error=>${err}`);
+          // this.$message.error(`redo error===>${JSON.stringify(err)}`);
+          console.log(`redo error===>${JSON.stringify(err)}`);
         });
     }
   }

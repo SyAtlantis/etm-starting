@@ -4,6 +4,10 @@ let server = new Server();
 
 class Depand {
 
+  static async getPlatform(data) {
+    return await server.get("/depend/getPlatform", data);
+  }
+
   static async getEtmInfo(data) {
     return await server.get("/depend/getEtmInfo", data);
   }

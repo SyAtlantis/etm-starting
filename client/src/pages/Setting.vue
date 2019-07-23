@@ -1,6 +1,6 @@
 <template>
   <div class="setting">
-    <a-spin :spinning="spinning" tip="保存中...">
+    <a-spin :spinning="spinning" tip="Loading...">
       <div class="setting-content">
         <a-form :form="form" @submit="handleSubmit">
           <a-form-item label="公网IP" :labelCol="{span: 5}" :wrapperCol="{span: 16}">

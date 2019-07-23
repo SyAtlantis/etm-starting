@@ -7,6 +7,7 @@ export default new Vuex.Store({
   state: {
     page: 0,
     depend: {
+      platform: "win32",//win32,linux,darwin
       etmInfo: {
         status: "uninstalled",
         version: "",
@@ -36,7 +37,8 @@ export default new Vuex.Store({
       port: "4096",
       secret: "",
       peers: "",
-      magic: ""
+      magic: "",
+      password: ""
     },
     monitor: {
       netInfo: {

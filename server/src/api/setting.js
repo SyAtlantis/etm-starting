@@ -55,7 +55,26 @@ let setVulue = async ctx => {
     }
 }
 
+let setPassword = async ctx => {
+    try {
+        let { params } = ctx.request.body;
+        console.log(params)
+        File.setRootPassword(params.password);
+        console.log(`echo "${File.getRootPassword()}" | sudo -S rm -rf `)
+        ctx.body = {
+            success: true,
+            results: "setting password ok"
+        };
+    } catch (err) {
+        ctx.body = {
+            success: false,
+            message: `${err}`
+        };
+    }
+}
+
 module.exports = (router) => {
     router.get("/setting/getVulue", getVulue);
     router.post("/setting/setVulue", setVulue);
+    router.post("/setting/setPassword", setPassword);
 };

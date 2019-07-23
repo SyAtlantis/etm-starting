@@ -4,6 +4,21 @@ const node = require('../libs/node');
 const pm2 = require('../libs/pm2');
 const etm = require('../libs/etm');
 
+let getPlatform = async ctx => {
+    try {
+        let res = process.platform;
+        ctx.body = {
+            success: true,
+            results: res
+        };
+    } catch (err) {
+        ctx.body = {
+            success: false,
+            message: `${err}`
+        };
+    }
+}
+
 let getNodeInfo = async ctx => {
     try {
         let res = await node.getNodeVersion();
@@ -145,6 +160,9 @@ let uninstallEtm = async ctx => {
 }
 
 module.exports = (router) => {
+
+    router.get("/depend/getPlatform", getPlatform);
+
     router.get("/depend/getNodeInfo", getNodeInfo);
     router.get("/depend/getPm2Info", getPm2Info);
     router.get("/depend/getEtmInfo", getEtmInfo);
