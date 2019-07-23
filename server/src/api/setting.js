@@ -58,9 +58,7 @@ let setVulue = async ctx => {
 let setPassword = async ctx => {
     try {
         let { params } = ctx.request.body;
-        console.log(params)
         File.setRootPassword(params.password);
-        console.log(`echo "${File.getRootPassword()}" | sudo -S rm -rf `)
         ctx.body = {
             success: true,
             results: "setting password ok"
