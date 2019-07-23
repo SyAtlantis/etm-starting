@@ -19,11 +19,11 @@ let assetsName = (() => {
 
 let srcPath = (() => {
     if (process.platform === "win32") {
-        return path.resolve(appPath, "./node/runner.exe");
+        return path.resolve(appPath, "./node/node_win.exe");
     } else if (process.platform === "linux") {
-        return path.resolve(appPath, "./node/runner");
+        return path.resolve(appPath, "./node/node_linux");
     } else if (process.platform === "darwin") {
-        return path.resolve(appPath, "./node/runner");
+        return path.resolve(appPath, "./node/node_mac");
     } else {
         throw Error(`Unsupported os[${process.platform}]`);
     }
@@ -33,12 +33,6 @@ let dstPath = (() => {
     if (process.platform === "win32") {
         return path.resolve(path.join(process.env["SystemRoot"], "System32", "node.exe"));
     } else if (process.platform === "linux") {
-        // Shell.exec("whoami")
-        //     .then(res => {
-        //         return `/home/${res}/bin/node`;
-        //     }).catch(err => {
-        //         throw err;
-        //     });
         return "/usr/local/bin/node";
     } else if (process.platform === "darwin") {
         return "/usr/local/bin/node";
@@ -62,8 +56,21 @@ class Node {
             Shell.rm("-rf", path.join(appPath, "node"));
             await File.installDepend(assetsName, appPath);
 
-            Shell.rm("-rf", dstPath);
-            return await Shell.ln("-sf", srcPath, dstPath);
+            if (process.platform === "win32") {
+                Shell.rm("-rf", dstPath);
+                return await Shell.ln("-sf", srcPath, dstPath);
+            }
+            else {
+                let password = File.getRootPassword();
+                let command1 = `echo "${password}" | sudo -S rm -rf "${dstPath}"`;
+                await Shell.exec(command1);
+
+                let command2 = `chmod a+x "${srcPath}"`;
+                await Shell.exec(command2);
+
+                let command3 = `echo "${password}" | sudo -S ln -s "${srcPath}" "${dstPath}"`;
+                return await Shell.exec(command3);
+            }
         } catch (err) {
             throw err;
         }

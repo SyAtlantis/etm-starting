@@ -64,6 +64,18 @@ class File {
 
     }
 
+    static getRootPassword() {
+        let passwordConf = path.join(__dirname, "..", "password.conf");
+        let passwordFile = fs.readFileSync(passwordConf);
+        let password = passwordFile.toString().trim();
+        return password;
+    }
+
+    static setRootPassword(password) {
+        let passwordConf = path.join(__dirname, "..", "password.conf");
+        fs.writeFileSync(passwordConf, password);
+    }
+
 }
 
 module.exports = File;

@@ -9,9 +9,9 @@ let srcPath = (() => {
     if (process.platform === "win32") {
         return path.join(appPath, "pm2/pm2.cmd");
     } else if (process.platform === "linux") {
-        return path.join(appPath, "pm2/node_modules/.bin/pm2");
+        return path.join(appPath, "pm2/node_modules/pm2/bin/pm2");
     } else if (process.platform === "darwin") {
-        return path.join(appPath, "pm2/node_modules/.bin/pm2");
+        return path.join(appPath, "pm2/node_modules/pm2/bin/pm2");
     } else {
         throw Error(`Unsupported os[${process.platform}]`);
     }
@@ -21,12 +21,6 @@ let dstPath = (() => {
     if (process.platform === "win32") {
         return path.resolve(path.join(process.env["SystemRoot"], "System32", "pm2.cmd"));
     } else if (process.platform === "linux") {
-        // Shell.exec("whoami")
-        //     .then(res => {
-        //         return `/home/${res}/bin/pm2`;
-        //     }).catch(err => {
-        //         throw err;
-        //     });
         return "/usr/local/bin/pm2";
     } else if (process.platform === "darwin") {
         return "/usr/local/bin/pm2";
@@ -66,10 +60,21 @@ class Pm2 {
                         throw Error("Create pm2 command failure.");
                     }
                 }
-            }
 
-            Shell.rm("-rf", dstPath);
-            return await Shell.ln("-sf", srcPath, dstPath);
+                Shell.rm("-rf", dstPath);
+                return await Shell.ln("-sf", srcPath, dstPath);
+            }
+            else {
+                let password = File.getRootPassword();
+                let command1 = `echo "${password}" | sudo -S rm -rf "${dstPath}"`;
+                await Shell.exec(command1);
+
+                let command2 = `chmod a+x "${srcPath}"`;
+                await Shell.exec(command2);
+
+                let command3 = `echo "${password}" | sudo -S ln -s "${srcPath}" "${dstPath}"`;
+                return await Shell.exec(command3);
+            }
         } catch (err) {
             throw err;
         }
