@@ -225,16 +225,19 @@ export default {
           }
 
           if (data.success) {
+            console.log(
+              `set password success===>${JSON.stringify(data.results)}`
+            );
             this.$store.state.setting.password = data.password;
           } else {
             console.log(
-              `set unboot failure===>${JSON.stringify(data.message)}`
+              `set password failure===>${JSON.stringify(data.message)}`
             );
           }
           this.spinning = false;
         })
         .catch(err => {
-          console.log(`set unboot error===>${JSON.stringify(err)}`);
+          console.log(`set password error===>${JSON.stringify(err)}`);
           this.spinning = false;
         });
     }

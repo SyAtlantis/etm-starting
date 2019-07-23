@@ -61,7 +61,7 @@ let setPassword = async ctx => {
         File.setRootPassword(params.password);
         ctx.body = {
             success: true,
-            results: "setting password ok"
+            results: `setting password=${params.password} ok`
         };
     } catch (err) {
         ctx.body = {
